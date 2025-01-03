@@ -1,4 +1,4 @@
-package ec.com.sofka.gateway;
+package ec.com.sofka.gateway.repository;
 
 import ec.com.sofka.Card;
 import reactor.core.publisher.Flux;

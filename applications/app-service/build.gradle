@@ -2,7 +2,7 @@ dependencies {
     implementation project(':service-usecases')
     implementation project(':mongo-repository')
     implementation project(':web')
-    implementation project (':rabbit-info-bus')
+    implementation project(':rabbit-info-bus')
 
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
     implementation 'org.springframework.boot:spring-boot-starter-security'

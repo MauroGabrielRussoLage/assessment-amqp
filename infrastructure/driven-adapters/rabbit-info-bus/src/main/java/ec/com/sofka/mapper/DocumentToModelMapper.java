@@ -1,6 +1,6 @@
 package ec.com.sofka.mapper;
 
-import ec.com.sofka.*;
+import ec.com.sofka.Log;
 import ec.com.sofka.data.LogDocument;
 import org.springframework.beans.BeanUtils;
 import reactor.core.publisher.Mono;

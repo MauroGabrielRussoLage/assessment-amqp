@@ -2,8 +2,7 @@ package ec.com.sofka.UC.get.branch;
 
 import ec.com.sofka.Branch;
 import ec.com.sofka.Log;
-import ec.com.sofka.UC.PrintLogUseCase;
-import ec.com.sofka.gateway.BranchRepository;
+import ec.com.sofka.gateway.repository.BranchRepository;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -13,16 +12,13 @@ import java.time.LocalDateTime;
 @Component
 public class GetAllBranchesUseCase {
     private final BranchRepository repository;
-    private final PrintLogUseCase printLogUseCase;
 
-    public GetAllBranchesUseCase(BranchRepository repository, PrintLogUseCase printLogUseCase) {
+    public GetAllBranchesUseCase(BranchRepository repository) {
         this.repository = repository;
-        this.printLogUseCase = printLogUseCase;
     }
 
     public Flux<Branch> apply() {
         return createLog()
-                .doOnNext(log ->  printLogUseCase.apply(Mono.just(log)))
                 .thenMany(repository.findAll());
     }
 

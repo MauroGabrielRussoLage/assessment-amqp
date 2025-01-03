@@ -2,7 +2,7 @@ package ec.com.sofka.adapter;
 
 import ec.com.sofka.Branch;
 import ec.com.sofka.data.BranchDocument;
-import ec.com.sofka.gateway.BranchRepository;
+import ec.com.sofka.gateway.repository.BranchRepository;
 import ec.com.sofka.mapper.DocumentToModelMapper;
 import ec.com.sofka.mapper.ModelToDocumentMapper;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
@@ -38,9 +38,9 @@ public class BranchAdapter implements BranchRepository {
         return id.flatMap(branchId ->
                 reactiveMongoTemplate
                         .exists(Query
-                                .query(Criteria
-                                        .where("_id")
-                                        .is(branchId)),
+                                        .query(Criteria
+                                                .where("_id")
+                                                .is(branchId)),
                                 BranchDocument.class));
     }
 
@@ -49,9 +49,9 @@ public class BranchAdapter implements BranchRepository {
         return name.flatMap(branchName ->
                         reactiveMongoTemplate
                                 .findOne(Query
-                                        .query(Criteria
-                                                .where("name")
-                                                .is(branchName)),
+                                                .query(Criteria
+                                                        .where("name")
+                                                        .is(branchName)),
                                         BranchDocument.class))
                 .flatMap(branchDocument -> DocumentToModelMapper.toBranch.apply(Mono.just(branchDocument)));
     }

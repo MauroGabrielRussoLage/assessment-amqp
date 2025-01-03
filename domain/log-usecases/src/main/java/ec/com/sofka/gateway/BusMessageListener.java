@@ -5,5 +5,5 @@ import reactor.core.publisher.Mono;
 
 //18. Port for listening messages
 public interface BusMessageListener {
-   void receiveMsg(Mono<Log> log);
+    void receiveMsg(Mono<Log> log);
 }

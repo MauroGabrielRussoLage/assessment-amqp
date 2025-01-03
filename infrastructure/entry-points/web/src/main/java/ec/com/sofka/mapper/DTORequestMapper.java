@@ -75,7 +75,16 @@ public class DTORequestMapper {
     public static final Function<Mono<TransactionRequestDTO>, Mono<Transaction>> toTransaction = transactionDTO ->
             transactionDTO.map(DTO -> {
                 Transaction transaction = new Transaction();
+                Branch branch = new Branch();
+                Account sourceAccount = new Account();
+                Account destinationAccount = new Account();
                 BeanUtils.copyProperties(DTO, transaction);
+                BeanUtils.copyProperties(DTO.getSourceAccount(), sourceAccount);
+                BeanUtils.copyProperties(DTO.getBranch(), branch);
+                BeanUtils.copyProperties(DTO.getDestinationAccount(), destinationAccount);
+                transaction.setSourceAccount(sourceAccount);
+                transaction.setDestinationAccount(destinationAccount);
+                transaction.setBranch(branch);
                 return transaction;
             });
 }

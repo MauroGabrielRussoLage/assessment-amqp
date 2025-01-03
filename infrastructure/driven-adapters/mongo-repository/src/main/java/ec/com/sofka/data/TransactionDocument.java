@@ -42,6 +42,6 @@ public class TransactionDocument {
     @NotNull(message = "Destination account is required")
     private AccountDocument destinationAccount;
     @DBRef
-    @NotNull(message = "Destination account is required")
+    @NotNull(message = "Source account is required")
     private AccountDocument sourceAccount;
 }

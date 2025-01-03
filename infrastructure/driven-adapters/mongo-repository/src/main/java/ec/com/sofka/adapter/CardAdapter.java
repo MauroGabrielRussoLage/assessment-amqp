@@ -2,7 +2,7 @@ package ec.com.sofka.adapter;
 
 import ec.com.sofka.Card;
 import ec.com.sofka.data.CardDocument;
-import ec.com.sofka.gateway.CardRepository;
+import ec.com.sofka.gateway.repository.CardRepository;
 import ec.com.sofka.mapper.DocumentToModelMapper;
 import ec.com.sofka.mapper.ModelToDocumentMapper;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;

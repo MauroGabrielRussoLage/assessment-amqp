@@ -3,7 +3,7 @@ package ec.com.sofka.UC.create;
 import ec.com.sofka.Account;
 import ec.com.sofka.Branch;
 import ec.com.sofka.Transaction;
-import ec.com.sofka.gateway.TransactionRepository;
+import ec.com.sofka.gateway.repository.TransactionRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

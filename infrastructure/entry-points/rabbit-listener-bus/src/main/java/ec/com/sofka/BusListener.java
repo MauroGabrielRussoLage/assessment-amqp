@@ -1,8 +1,6 @@
 package ec.com.sofka;
 
-import com.fasterxml.jackson.databind.json.JsonMapper;
 import ec.com.sofka.UC.PrintLogUseCase;
-import ec.com.sofka.gateway.BusMessageListener;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -15,9 +13,10 @@ public class BusListener {
     public BusListener(PrintLogUseCase printLogUseCase) {
         this.printLogUseCase = printLogUseCase;
     }
+
     //23. Implement the receiveMsg method with the usecase
     @RabbitListener(queues = "example.queue")
     public void receiveMsg(Log message) {
-        printLogUseCase.apply(Mono.just(message));
+        printLogUseCase.apply(Mono.just(message)).subscribe();
     }
 }

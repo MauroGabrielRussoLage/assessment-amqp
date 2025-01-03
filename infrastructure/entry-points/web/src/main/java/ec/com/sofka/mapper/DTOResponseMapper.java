@@ -40,6 +40,16 @@ public class DTOResponseMapper {
     public static final Function<Mono<Transaction>, Mono<TransactionResponseDTO>> toTransactionResponseDTO = transaction ->
             transaction.map(transactionEntity -> {
                 TransactionResponseDTO transactionDTO = new TransactionResponseDTO();
+                BranchResponseDTO branchDTO = new BranchResponseDTO();
+                AccountResponseDTO sourceAccountDTO = new AccountResponseDTO();
+                AccountResponseDTO destinationAccountDTO = new AccountResponseDTO();
+                BeanUtils.copyProperties(transactionEntity, transaction);
+                BeanUtils.copyProperties(transactionEntity.getSourceAccount(), sourceAccountDTO);
+                BeanUtils.copyProperties(transactionEntity.getBranch(), branchDTO);
+                BeanUtils.copyProperties(transactionEntity.getDestinationAccount(), destinationAccountDTO);
+                transactionDTO.setSourceAccount(sourceAccountDTO);
+                transactionDTO.setDestinationAccount(destinationAccountDTO);
+                transactionDTO.setBranch(branchDTO);
                 BeanUtils.copyProperties(transactionEntity, transactionDTO);
                 return transactionDTO;
             });
@@ -75,7 +85,16 @@ public class DTOResponseMapper {
     public static final Function<Mono<TransactionResponseDTO>, Mono<Transaction>> toTransaction = transactionDTO ->
             transactionDTO.map(DTO -> {
                 Transaction transaction = new Transaction();
+                Branch branch = new Branch();
+                Account sourceAccount = new Account();
+                Account destinationAccount = new Account();
                 BeanUtils.copyProperties(DTO, transaction);
+                BeanUtils.copyProperties(DTO.getSourceAccount(), sourceAccount);
+                BeanUtils.copyProperties(DTO.getBranch(), branch);
+                BeanUtils.copyProperties(DTO.getDestinationAccount(), destinationAccount);
+                transaction.setSourceAccount(sourceAccount);
+                transaction.setDestinationAccount(destinationAccount);
+                transaction.setBranch(branch);
                 return transaction;
             });
 }

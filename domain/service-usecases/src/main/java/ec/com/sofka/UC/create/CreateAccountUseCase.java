@@ -1,7 +1,7 @@
 package ec.com.sofka.UC.create;
 
 import ec.com.sofka.Account;
-import ec.com.sofka.gateway.AccountRepository;
+import ec.com.sofka.gateway.repository.AccountRepository;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 

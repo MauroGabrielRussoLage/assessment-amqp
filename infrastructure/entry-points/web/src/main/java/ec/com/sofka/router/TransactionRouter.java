@@ -39,10 +39,10 @@ public class TransactionRouter {
     @Bean
     @RouterOperations({
             @RouterOperation(
-                    path = "/transactions",
+                    path = "/transactions/create",
                     method = RequestMethod.POST,
                     operation = @Operation(
-                            tags = {"customers"},
+                            tags = {"transactions"},
                             operationId = "createTransaction",
                             summary = "Create a new transaction",
                             description = "Add a new transaction to the system",
@@ -70,7 +70,7 @@ public class TransactionRouter {
                     path = "/transactions/id",
                     method = RequestMethod.POST,
                     operation = @Operation(
-                            tags = {"customers"},
+                            tags = {"transactions"},
                             operationId = "getTransactionById",
                             summary = "Retrieve a transaction by ID",
                             description = "Get details of a transaction by its unique ID",
@@ -98,7 +98,7 @@ public class TransactionRouter {
                     path = "/transactions",
                     method = RequestMethod.GET,
                     operation = @Operation(
-                            tags = {"customers"},
+                            tags = {"transactions"},
                             operationId = "getAllCustomers",
                             summary = "Retrieve all transactions",
                             description = "Get a list of all transactions in the system",
@@ -117,7 +117,7 @@ public class TransactionRouter {
                     path = "/transactions/branch",
                     method = RequestMethod.POST,
                     operation = @Operation(
-                            tags = {"customers"},
+                            tags = {"transactions"},
                             operationId = "getTransactionsByBranch",
                             summary = "Retrieve transactions by branch ID",
                             description = "Get a list of transactions for a specific branch",
@@ -145,7 +145,7 @@ public class TransactionRouter {
                     path = "/transactions/account/destination",
                     method = RequestMethod.POST,
                     operation = @Operation(
-                            tags = {"customers"},
+                            tags = {"transactions"},
                             operationId = "getTransactionsByDestinationAccountId",
                             summary = "Retrieve transactions by destination account ID",
                             description = "Get transactions linked to a specific destination account",
@@ -173,7 +173,7 @@ public class TransactionRouter {
                     path = "/transactions/account/source",
                     method = RequestMethod.POST,
                     operation = @Operation(
-                            tags = {"customers"},
+                            tags = {"transactions"},
                             operationId = "getTransactionsBySourceAccountId",
                             summary = "Retrieve transactions by source account ID",
                             description = "Get transactions linked to a specific source account",
@@ -201,7 +201,7 @@ public class TransactionRouter {
                     path = "/transactions/date",
                     method = RequestMethod.POST,
                     operation = @Operation(
-                            tags = {"customers"},
+                            tags = {"transactions"},
                             operationId = "getTransactionsByDate",
                             summary = "Retrieve transactions by date",
                             description = "Get transactions made on a specific date",
@@ -228,7 +228,7 @@ public class TransactionRouter {
                     path = "/transactions/type",
                     method = RequestMethod.POST,
                     operation = @Operation(
-                            tags = {"customers"},
+                            tags = {"transactions"},
                             operationId = "getTransactionsByType",
                             summary = "Retrieve transactions by type",
                             description = "Get transactions of a specific type",
@@ -256,7 +256,7 @@ public class TransactionRouter {
                     path = "/transactions",
                     method = RequestMethod.POST,
                     operation = @Operation(
-                            tags = {"customers"},
+                            tags = {"transactions"},
                             operationId = "updateTransaction",
                             summary = "Update a transaction",
                             description = "Update details of an existing transaction",
@@ -279,7 +279,7 @@ public class TransactionRouter {
                     path = "/transactions",
                     method = RequestMethod.POST,
                     operation = @Operation(
-                            tags = {"customers"},
+                            tags = {"transactions"},
                             operationId = "deleteTransaction",
                             summary = "Delete a transaction",
                             description = "Remove a transaction from the system by its ID",
@@ -299,7 +299,7 @@ public class TransactionRouter {
             )
     })
     public RouterFunction<ServerResponse> transactionRoutes() {
-        return route(POST("/transactions"), this::createTransaction)
+        return route(POST("/transactions/create"), this::createTransaction)
                 .andRoute(POST("/transactions/id"), this::getTransactionById)
                 .andRoute(GET("/transactions"), this::getAllTransactions)
                 .andRoute(POST("/transactions/branch"), this::getTransactionsByBranch)

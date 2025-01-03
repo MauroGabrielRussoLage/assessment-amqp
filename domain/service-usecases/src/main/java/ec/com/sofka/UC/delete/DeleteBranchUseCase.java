@@ -1,6 +1,6 @@
 package ec.com.sofka.UC.delete;
 
-import ec.com.sofka.gateway.BranchRepository;
+import ec.com.sofka.gateway.repository.BranchRepository;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 

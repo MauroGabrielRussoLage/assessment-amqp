@@ -3,21 +3,34 @@ package ec.com.sofka;
 import java.time.LocalDateTime;
 
 public class Log {
-    private String id;
-    private String message;
-    private String action;
-    private String level;
-    private LocalDateTime timestamp;
+    private Integer transactionId;      // ID único de la transacción
+    private String action;             // Tipo de operación: CREATE, TRANSFER, etc.
+    private Integer accountId;          // Cuenta o entidad afectada
+    private String message;            // Descripción o detalle de la operación
+    private String level;              // Nivel de severidad (INFO, WARN, ERROR)
+    private LocalDateTime timestamp;   // Momento en que se generó el log
+    private String status;             // Estado de la transacción (SUCCESS, FAILED, PENDING, etc.)
 
-    public Log(String action, String id, String level, String message, LocalDateTime timestamp) {
+    public Log(Integer accountId, String action, String level, String message, String status, LocalDateTime timestamp, Integer transactionId) {
+        this.accountId = accountId;
         this.action = action;
-        this.id = id;
         this.level = level;
         this.message = message;
+        this.status = status;
         this.timestamp = timestamp;
+        this.transactionId = transactionId;
     }
 
-    public Log() {}
+    public Log() {
+    }
+
+    public Integer getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(Integer accountId) {
+        this.accountId = accountId;
+    }
 
     public String getAction() {
         return action;
@@ -25,14 +38,6 @@ public class Log {
 
     public void setAction(String action) {
         this.action = action;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getLevel() {
@@ -51,6 +56,14 @@ public class Log {
         this.message = message;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public LocalDateTime getTimestamp() {
         return timestamp;
     }
@@ -59,13 +72,24 @@ public class Log {
         this.timestamp = timestamp;
     }
 
+    public Integer getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(Integer transactionId) {
+        this.transactionId = transactionId;
+    }
 
     @Override
     public String toString() {
-        return "CustomMessage{id='" + id + "', " +
-                "message='" + message + "', " +
-                "action='" + action + "', " +
-                "level='" + level+ "', " +
-                "timestamp='" + timestamp+"'}";
+        return "TransactionLog{" +
+                "transactionId='" + transactionId + '\'' +
+                ", action='" + action + '\'' +
+                ", accountId='" + accountId + '\'' +
+                ", message='" + message + '\'' +
+                ", level='" + level + '\'' +
+                ", timestamp=" + timestamp + '\'' +
+                ", status='" + status + '\'' +
+                '}';
     }
 }

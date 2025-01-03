@@ -36,10 +36,19 @@ public class DocumentToModelMapper {
                 return customerModel;
             });
 
-    public static final Function<Mono<TransactionDocument>, Mono<Transaction>> toTransaction = transactionDTO ->
-            transactionDTO.map(transactionDocument -> {
+    public static final Function<Mono<TransactionDocument>, Mono<Transaction>> toTransaction = transaction ->
+            transaction.map(transactionDocument -> {
                 Transaction transactionModel = new Transaction();
+                Branch branchModel = new Branch();
+                Account sourceAccountModel = new Account();
+                Account destinationAccountModel = new Account();
                 BeanUtils.copyProperties(transactionDocument, transactionModel);
+                BeanUtils.copyProperties(transactionDocument.getBranch(), branchModel);
+                BeanUtils.copyProperties(transactionDocument.getSourceAccount(), sourceAccountModel);
+                BeanUtils.copyProperties(transactionDocument.getDestinationAccount(), destinationAccountModel);
+                transactionModel.setSourceAccount(sourceAccountModel);
+                transactionModel.setDestinationAccount(destinationAccountModel);
+                transactionModel.setBranch(branchModel);
                 return transactionModel;
             });
 }

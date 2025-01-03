@@ -1,6 +1,6 @@
 package ec.com.sofka.UC.delete;
 
-import ec.com.sofka.gateway.CardRepository;
+import ec.com.sofka.gateway.repository.CardRepository;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 

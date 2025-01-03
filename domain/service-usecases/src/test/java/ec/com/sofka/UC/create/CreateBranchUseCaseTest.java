@@ -1,7 +1,7 @@
 package ec.com.sofka.UC.create;
 
 import ec.com.sofka.Branch;
-import ec.com.sofka.gateway.BranchRepository;
+import ec.com.sofka.gateway.repository.BranchRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

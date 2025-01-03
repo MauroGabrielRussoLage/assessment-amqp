@@ -1,14 +1,13 @@
 package ec.com.sofka.UC;
 
 import ec.com.sofka.Log;
-import ec.com.sofka.gateway.BusMessageListener;
-import ec.com.sofka.gateway.LogRepository;
+import ec.com.sofka.gateway.repository.LogRepository;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 //18. UseCase for printing logs
 @Component
-public class PrintLogUseCase{
+public class PrintLogUseCase {
 
     private final LogRepository repository;
 
@@ -16,7 +15,7 @@ public class PrintLogUseCase{
         this.repository = repository;
     }
 
-    public void apply(Mono<Log> log) {
-        log.subscribe(repository::save);
+    public Mono<Void> apply(Mono<Log> log) {
+        return repository.createLog(log);
     }
 }

@@ -1,7 +1,7 @@
 package ec.com.sofka.UC.create;
 
 import ec.com.sofka.Card;
-import ec.com.sofka.gateway.CardRepository;
+import ec.com.sofka.gateway.repository.CardRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

@@ -2,7 +2,7 @@ package ec.com.sofka.adapter;
 
 import ec.com.sofka.Customer;
 import ec.com.sofka.data.CustomerDocument;
-import ec.com.sofka.gateway.CustomerRepository;
+import ec.com.sofka.gateway.repository.CustomerRepository;
 import ec.com.sofka.mapper.DocumentToModelMapper;
 import ec.com.sofka.mapper.ModelToDocumentMapper;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
