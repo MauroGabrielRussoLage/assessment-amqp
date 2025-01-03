@@ -29,3 +29,7 @@ findProject(':rabbit-listener-bus').projectDir = file('./infrastructure/entry-po
 
 include 'log-usecases'
 findProject(':log-usecases').projectDir = file('./domain/log-usecases')
+
+include 'rabbit-properties'
+findProject(':rabbit-properties').projectDir = file('./shared/rabbit-properties')
+

@@ -1,6 +1,6 @@
 package ec.com.sofka.mapper;
 
-import ec.com.sofka.Log;
+import ec.com.sofka.TransactionLog;
 import ec.com.sofka.data.LogDocument;
 import org.springframework.beans.BeanUtils;
 import reactor.core.publisher.Mono;
@@ -8,7 +8,7 @@ import reactor.core.publisher.Mono;
 import java.util.function.Function;
 
 public class ModelToDocumentMapper {
-    public static final Function<Mono<Log>, Mono<LogDocument>> toLog = log ->
+    public static final Function<Mono<TransactionLog>, Mono<LogDocument>> toLog = log ->
             log.map(logModel -> {
                 LogDocument logDocument = new LogDocument();
                 BeanUtils.copyProperties(logModel, logDocument);

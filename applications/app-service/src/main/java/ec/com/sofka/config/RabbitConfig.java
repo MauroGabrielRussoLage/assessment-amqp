@@ -1,5 +1,6 @@
 package ec.com.sofka.config;
 
+import ec.com.sofka.EnvProperties;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
@@ -10,32 +11,109 @@ import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-//2. Create class to configure RabbitMQ here in app layer: To generate beans
 @Configuration
 public class RabbitConfig {
-    //3. Configurations: Environment variables - Names must follow a pattern like this
-    // Each queue must have its own name - Broker admin must create this and provide us as info to connect later
-    public static final String EXCHANGE_NAME = "example.exchange";
-    public static final String QUEUE_NAME = "example.queue";
-    public static final String ROUTING_KEY = "example.routingKey";
 
-    //4. Exchange configuration
-    @Bean
-    public TopicExchange exchange() {
-        return new TopicExchange(EXCHANGE_NAME);
+    private final EnvProperties envProperties;
+
+    public RabbitConfig(EnvProperties envProperties) {
+        this.envProperties = envProperties;
     }
 
-    //5. Queue configuration: As many queues you have - ofc you can have more than one and each one must have its proper name
-    //2nd param here: durable - Queue will survive a broker restart
     @Bean
-    public Queue queue() {
-        return new Queue(QUEUE_NAME, true);
+    public TopicExchange transferExchange() {
+        return new TopicExchange(envProperties.getTransferExchangeName());
     }
 
-    //6. Binding configuration: Connects queue with exchange - As many bindings as queues I have
     @Bean
-    public Binding binding(Queue queue, TopicExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with(ROUTING_KEY);
+    public TopicExchange anotherAccountDepositExchange() {
+        return new TopicExchange(envProperties.getTransferExchangeName());
+    }
+
+    @Bean
+    public TopicExchange storeCardPurchaseExchange() {
+        return new TopicExchange(envProperties.getTransferExchangeName());
+    }
+
+    @Bean
+    public TopicExchange onlineCardPurchaseExchange() {
+        return new TopicExchange(envProperties.getTransferExchangeName());
+    }
+
+    @Bean
+    public TopicExchange atmWithdrawalExchange() {
+        return new TopicExchange(envProperties.getTransferExchangeName());
+    }
+
+    @Bean
+    public TopicExchange atmDepositExchange() {
+        return new TopicExchange(envProperties.getTransferExchangeName());
+    }
+
+    @Bean
+    public Queue branchTransferQueue() {
+        return new Queue(envProperties.getBranchTransferQueueName(), true);
+    }
+
+    @Bean
+    public Queue anotherAccountDepositQueue() {
+        return new Queue(envProperties.getAnotherAccountDepositQueueName(), true);
+    }
+
+    @Bean
+    public Queue storeCardPurchaseQueue() {
+        return new Queue(envProperties.getStoreCardPurchaseQueueName(), true);
+    }
+
+    @Bean
+    public Queue onlineCardPurchaseQueue() {
+        return new Queue(envProperties.getOnlineCardPurchaseQueueName(), true);
+    }
+
+    @Bean
+    public Queue atmWithdrawalQueue() {
+        return new Queue(envProperties.getAtmWithdrawalQueueName(), true);
+    }
+
+    @Bean
+    public Queue atmDepositQueue() {
+        return new Queue(envProperties.getAtmDepositQueueName(), true);
+    }
+
+    @Bean
+    public Binding branchTransferBinding(Queue branchTransferQueue, TopicExchange transferExchange) {
+        return BindingBuilder.bind(branchTransferQueue).to(transferExchange)
+                .with(envProperties.getBranchTransferRoutingKey());
+    }
+
+    @Bean
+    public Binding anotherAccountDepositBinding(Queue anotherAccountDepositQueue, TopicExchange transferExchange) {
+        return BindingBuilder.bind(anotherAccountDepositQueue).to(transferExchange)
+                .with(envProperties.getAnotherAccountDepositRoutingKey());
+    }
+
+    @Bean
+    public Binding storeCardPurchaseBinding(Queue storeCardPurchaseQueue, TopicExchange transferExchange) {
+        return BindingBuilder.bind(storeCardPurchaseQueue).to(transferExchange)
+                .with(envProperties.getStoreCardPurchaseRoutingKey());
+    }
+
+    @Bean
+    public Binding onlineCardPurchaseBinding(Queue onlineCardPurchaseQueue, TopicExchange transferExchange) {
+        return BindingBuilder.bind(onlineCardPurchaseQueue).to(transferExchange)
+                .with(envProperties.getOnlineCardPurchaseRoutingKey());
+    }
+
+    @Bean
+    public Binding atmWithdrawalBinding(Queue atmWithdrawalQueue, TopicExchange transferExchange) {
+        return BindingBuilder.bind(atmWithdrawalQueue).to(transferExchange)
+                .with(envProperties.getAtmWithdrawalRoutingKey());
+    }
+
+    @Bean
+    public Binding atmDepositBinding(Queue atmDepositQueue, TopicExchange transferExchange) {
+        return BindingBuilder.bind(atmDepositQueue).to(transferExchange)
+                .with(envProperties.getAtmDepositRoutingKey());
     }
 
     @Bean

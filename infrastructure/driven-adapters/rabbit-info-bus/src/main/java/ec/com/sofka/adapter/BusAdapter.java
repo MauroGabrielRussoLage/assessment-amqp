@@ -1,37 +1,44 @@
 package ec.com.sofka.adapter;
 
-//Cuidao, esto dio dependencia circular. Toca colocar por fin práctico los nombres como están en la clase RabbitConfig
-//import ec.com.sofka.config.RabbitConfig;
-
-import ec.com.sofka.Log;
+import ec.com.sofka.EnvProperties;
+import ec.com.sofka.TransactionLog;
 import ec.com.sofka.gateway.BusMessage;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 
-//11. BusMessage implementation, this is a service so, don't forget the annotation
 @Service
 public class BusAdapter implements BusMessage {
 
-    //13. Use of RabbitTemplate to define the sendMsg method
     private final RabbitTemplate rabbitTemplate;
+    private final EnvProperties envProperties;
 
-    public BusAdapter(RabbitTemplate rabbitTemplate) {
+    public BusAdapter(RabbitTemplate rabbitTemplate, EnvProperties envProperties) {
         this.rabbitTemplate = rabbitTemplate;
+        this.envProperties = envProperties;
     }
 
     @Override
-    public Mono<Void> sendMsg(Mono<Log> monoLog) {
-        //14. Calling the config done on app, but this must be managed through Environment Variables.
-        return monoLog
-                .doOnNext(log -> {
-                    rabbitTemplate.convertAndSend(
-                            "example.exchange",
-                            "example.routingKey",
-                            log
-                    );
-                })
-                .then();
+    public Mono<Void> sendMsg(Mono<TransactionLog> monoLog) {
+        return monoLog.flatMap(log ->
+                Mono.fromCallable(() -> {
+                            rabbitTemplate.convertAndSend(
+                                    envProperties.getTransferExchangeName(),
+                                    switch (log.getType()) {
+                                        case "branch_transfer" -> envProperties.getBranchTransferRoutingKey();
+                                        case "another_account_deposit" -> envProperties.getAnotherAccountDepositRoutingKey();
+                                        case "store_card_purchase" -> envProperties.getStoreCardPurchaseRoutingKey();
+                                        case "online_card_purchase" -> envProperties.getOnlineCardPurchaseRoutingKey();
+                                        case "atm_withdrawal" -> envProperties.getAtmWithdrawalRoutingKey();
+                                        case "atm_deposit" -> envProperties.getAtmDepositRoutingKey();
+                                        default -> throw new IllegalArgumentException("Invalid group type: " + log.getType());
+                                    },
+                                    log
+                            );
+                            return log;
+                        })
+                        .then()
+        );
     }
 }

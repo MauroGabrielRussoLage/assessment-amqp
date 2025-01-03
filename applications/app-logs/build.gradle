@@ -3,6 +3,7 @@ dependencies {
     implementation project(':service-usecases')
     implementation project(':rabbit-info-bus')
     implementation project(':rabbit-listener-bus')
+    implementation project(":rabbit-properties")
 
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
     implementation 'org.springframework.boot:spring-boot-starter-security'

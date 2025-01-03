@@ -1,6 +1,6 @@
 package ec.com.sofka.UC;
 
-import ec.com.sofka.Log;
+import ec.com.sofka.TransactionLog;
 import ec.com.sofka.gateway.repository.LogRepository;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -15,7 +15,7 @@ public class PrintLogUseCase {
         this.repository = repository;
     }
 
-    public Mono<Void> apply(Mono<Log> log) {
+    public Mono<Void> apply(Mono<TransactionLog> log) {
         return repository.createLog(log);
     }
 }

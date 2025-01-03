@@ -2,16 +2,17 @@ package ec.com.sofka;
 
 import java.time.LocalDateTime;
 
-public class Log {
-    private Integer transactionId;      // ID único de la transacción
+public class TransactionLog {
+    private Integer transactionId;     // ID único de la transacción
     private String action;             // Tipo de operación: CREATE, TRANSFER, etc.
-    private Integer accountId;          // Cuenta o entidad afectada
+    private Integer accountId;         // Cuenta o entidad afectada
     private String message;            // Descripción o detalle de la operación
     private String level;              // Nivel de severidad (INFO, WARN, ERROR)
     private LocalDateTime timestamp;   // Momento en que se generó el log
     private String status;             // Estado de la transacción (SUCCESS, FAILED, PENDING, etc.)
+    private String type;               // (branch_transfer|another_account_deposit|store_card_purchase|online_card_purchase|atm_withdrawal|atm_deposit)
 
-    public Log(Integer accountId, String action, String level, String message, String status, LocalDateTime timestamp, Integer transactionId) {
+    public TransactionLog(Integer accountId, String action, String level, String message, String status, LocalDateTime timestamp, Integer transactionId, String type) {
         this.accountId = accountId;
         this.action = action;
         this.level = level;
@@ -19,9 +20,18 @@ public class Log {
         this.status = status;
         this.timestamp = timestamp;
         this.transactionId = transactionId;
+        this.type = type;
     }
 
-    public Log() {
+    public TransactionLog() {
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public Integer getAccountId() {

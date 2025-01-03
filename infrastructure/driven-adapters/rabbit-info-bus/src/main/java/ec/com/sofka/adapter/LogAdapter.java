@@ -1,7 +1,7 @@
 package ec.com.sofka.adapter;
 
 
-import ec.com.sofka.Log;
+import ec.com.sofka.TransactionLog;
 import ec.com.sofka.data.LogDocument;
 
 
@@ -24,14 +24,17 @@ public class LogAdapter implements LogRepository {
     }
 
     @Override
-    public Mono<Void> createLog(Mono<Log> logMono) {
-        return logMono.map(log -> {
+    public Mono<Void> createLog(Mono<TransactionLog> logMono) {
+        return logMono.flatMap(log -> {
             Query query = new Query(Criteria.where("_id").is(log.getTransactionId()));
-            Update update = new Update().push("logs", ModelToDocumentMapper.toLog.apply(Mono.just(log)).subscribe());
-            return reactiveMongoTemplate.updateFirst(query, update, LogDocument.class)
-                    .map(result -> result.getModifiedCount() > 0
-                            ? Mono.just(log)
-                            : Mono.error(new RuntimeException("Failed to create log")));
+            return ModelToDocumentMapper.toLog.apply(Mono.just(log))
+                    .flatMap(logDocument -> {
+                        Update update = new Update().push("logs", logDocument);
+                        return reactiveMongoTemplate.upsert(query, update, LogDocument.class)
+                                .flatMap(result -> result.getModifiedCount() > 0
+                                        ? Mono.just(log)
+                                        : Mono.error(new RuntimeException("Failed to create log")));
+                    });
         }).then();
     }
 }

@@ -1,6 +1,6 @@
 package ec.com.sofka.UC.create;
 
-import ec.com.sofka.Log;
+import ec.com.sofka.TransactionLog;
 import ec.com.sofka.Transaction;
 import ec.com.sofka.gateway.BusMessage;
 import ec.com.sofka.gateway.repository.TransactionRepository;
@@ -23,18 +23,19 @@ public class CreateTransactionUseCase {
     public Mono<Transaction> apply(Mono<Transaction> transaction) {
         return transaction
                 .flatMap(tx -> {
-                    Log log = new Log(
+                    TransactionLog transactionLog = new TransactionLog(
                             tx.getSourceAccount().getId(),
                             "CREATE",
                             "INFO",
                             "Transaction ok",
                             "SUCCESS",
                             LocalDateTime.now(),
-                            tx.getId()
+                            tx.getId(),
+                            tx.getType()
                     );
                     return repository.createTransaction(Mono.just(tx))
                             .flatMap(createdTx ->
-                                    busMessage.sendMsg(Mono.just(log))
+                                    busMessage.sendMsg(Mono.just(transactionLog))
                                             .then(Mono.just(createdTx))
                             );
                 });
