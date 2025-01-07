@@ -1,4 +1,4 @@
-package ec.com.sofka.customer.event;
+package ec.com.sofka.aggregate.events;
 
 import ec.com.sofka.generic.domain.DomainEvent;
 
@@ -11,8 +11,8 @@ public class CustomerCreated extends DomainEvent {
     private String address;
     private String status;
 
-    public CustomerCreated(String eventType, String address, String customerId, String email, String firstName, String lastName, String phone, String status) {
-        super(eventType);
+    public CustomerCreated(String address, String customerId, String email, String firstName, String lastName, String phone, String status) {
+        super(EventsEnum.CUSTOMER_CREATED.name());
         this.address = address;
         this.customerId = customerId;
         this.email = email;

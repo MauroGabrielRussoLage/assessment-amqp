@@ -5,7 +5,7 @@ import ec.com.sofka.generic.interfaces.ValueObject;
 public class LastName implements ValueObject<String> {
     private final String value;
 
-    private LastName(final String value) {
+    public LastName(final String value) {
         this.value = validate(value);
     }
 

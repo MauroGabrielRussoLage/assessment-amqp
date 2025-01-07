@@ -5,7 +5,7 @@ import ec.com.sofka.generic.interfaces.ValueObject;
 public class Email implements ValueObject<String> {
     private final String value;
 
-    private Email(final String value) {
+    public Email(final String value) {
         this.value = validate(value);
     }
 

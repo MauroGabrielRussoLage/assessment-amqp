@@ -5,7 +5,7 @@ import ec.com.sofka.generic.interfaces.ValueObject;
 public class Status implements ValueObject<String> {
     private final String value;
 
-    private Status(final String value) {
+    public Status(final String value) {
         this.value = validate(value);
     }
 

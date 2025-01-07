@@ -2,7 +2,9 @@ package ec.com.sofka.account;
 
 
 import ec.com.sofka.account.value.AccountId;
-import ec.com.sofka.account.value.object.*;
+import ec.com.sofka.account.value.AccountNumber;
+import ec.com.sofka.account.value.AccountType;
+import ec.com.sofka.account.value.Balance;
 
 import ec.com.sofka.aggregate.value.CustomerId;
 import ec.com.sofka.generic.object.Status;
