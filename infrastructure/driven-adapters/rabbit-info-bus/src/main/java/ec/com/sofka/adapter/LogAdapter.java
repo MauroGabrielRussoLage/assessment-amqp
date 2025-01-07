@@ -1,7 +1,7 @@
 package ec.com.sofka.adapter;
 
 
-import ec.com.sofka.TransactionLog;
+import ec.com.sofka.log.TransactionLog;
 import ec.com.sofka.data.LogDocument;
 
 

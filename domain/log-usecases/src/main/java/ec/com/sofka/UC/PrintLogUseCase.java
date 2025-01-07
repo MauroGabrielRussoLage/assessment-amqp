@@ -1,6 +1,6 @@
 package ec.com.sofka.UC;
 
-import ec.com.sofka.TransactionLog;
+import ec.com.sofka.log.TransactionLog;
 import ec.com.sofka.gateway.repository.LogRepository;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;

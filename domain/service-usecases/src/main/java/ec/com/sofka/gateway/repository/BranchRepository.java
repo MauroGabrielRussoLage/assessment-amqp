@@ -1,20 +1,23 @@
 package ec.com.sofka.gateway.repository;
 
-import ec.com.sofka.Branch;
+import ec.com.sofka.request.BranchRequestDTO;
+import ec.com.sofka.response.BranchResponseDTO;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface BranchRepository {
 
-    Mono<Branch> createBranch(Mono<Branch> branch);
+    Mono<BranchResponseDTO> createBranch(Mono<BranchRequestDTO> branch);
 
-    Mono<Branch> findBranchById(Mono<Integer> id);
+    Mono<BranchResponseDTO> findBranchById(Mono<Integer> id);
 
-    Mono<Boolean> existsById(Mono<Integer> id);
+    Mono<BranchResponseDTO> existsById(Mono<Integer> id);
 
-    Mono<Branch> findBranchByName(Mono<String> name);
+    Mono<BranchResponseDTO> findBranchByName(Mono<String> name);
 
-    Flux<Branch> findAll();
+    Flux<BranchResponseDTO> findAll();
+
+    Mono<BranchResponseDTO> updateBranch(Mono<BranchRequestDTO> branch);
 
     Mono<Void> deleteById(Mono<Integer> id);
 }

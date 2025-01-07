@@ -1,7 +1,7 @@
 package ec.com.sofka.UC.create;
 
-import ec.com.sofka.Account;
-import ec.com.sofka.Customer;
+import ec.com.sofka.account.Account;
+import ec.com.sofka.customer.Customer;
 import ec.com.sofka.gateway.repository.CustomerRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,7 +1,7 @@
 package ec.com.sofka.adapter;
 
 import ec.com.sofka.EnvProperties;
-import ec.com.sofka.TransactionLog;
+import ec.com.sofka.log.TransactionLog;
 import ec.com.sofka.gateway.BusMessage;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;

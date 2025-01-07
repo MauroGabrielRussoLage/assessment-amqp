@@ -1,6 +1,6 @@
 package ec.com.sofka.data.request;
 
-import ec.com.sofka.data.response.AccountResponseDTO;
+import ec.com.sofka.request.AccountRequestDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,5 +19,5 @@ public class CustomerRequestDTO {
     private String email;
     private String phone;
     private String address;
-    private List<AccountResponseDTO> accounts;
+    private List<AccountRequestDTO> accounts;
 }

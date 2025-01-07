@@ -1,10 +1,12 @@
 package ec.com.sofka;
 
 import ec.com.sofka.UC.PrintLogUseCase;
+import ec.com.sofka.log.TransactionLog;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
+// Agregar implementacion de interfaz
 @Service
 public class BusListener {
     private final PrintLogUseCase printLogUseCase;

@@ -1,7 +1,11 @@
 package ec.com.sofka.mapper;
 
-import ec.com.sofka.*;
+import ec.com.sofka.account.Account;
+import ec.com.sofka.branch.Branch;
+import ec.com.sofka.card.Card;
+import ec.com.sofka.customer.Customer;
 import ec.com.sofka.data.request.*;
+import ec.com.sofka.transaction.Transaction;
 import org.springframework.beans.BeanUtils;
 import reactor.core.publisher.Mono;
 

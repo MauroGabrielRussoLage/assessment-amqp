@@ -1,6 +1,6 @@
 package ec.com.sofka.gateway;
 
-import ec.com.sofka.TransactionLog;
+import ec.com.sofka.log.TransactionLog;
 import reactor.core.publisher.Mono;
 
 //18. Port for listening messages

@@ -1,7 +1,7 @@
 package ec.com.sofka.UC.create;
 
-import ec.com.sofka.TransactionLog;
-import ec.com.sofka.Transaction;
+import ec.com.sofka.log.TransactionLog;
+import ec.com.sofka.transaction.Transaction;
 import ec.com.sofka.gateway.BusMessage;
 import ec.com.sofka.gateway.repository.TransactionRepository;
 import org.springframework.stereotype.Component;

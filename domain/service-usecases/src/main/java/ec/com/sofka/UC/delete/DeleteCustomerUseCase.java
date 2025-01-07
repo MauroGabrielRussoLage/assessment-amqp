@@ -13,6 +13,6 @@ public class DeleteCustomerUseCase {
     }
 
     public Mono<Void> apply(int id) {
-        return null;
+        return repository.deleteById(Mono.just(id));
     }
 }

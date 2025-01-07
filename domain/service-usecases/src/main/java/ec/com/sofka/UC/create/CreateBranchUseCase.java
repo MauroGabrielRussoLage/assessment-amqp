@@ -1,7 +1,7 @@
 package ec.com.sofka.UC.create;
 
-import ec.com.sofka.Branch;
-import ec.com.sofka.TransactionLog;
+import ec.com.sofka.branch.Branch;
+import ec.com.sofka.log.TransactionLog;
 import ec.com.sofka.gateway.repository.BranchRepository;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;

@@ -1,8 +1,9 @@
 package ec.com.sofka.UC.create;
 
-import ec.com.sofka.Account;
-import ec.com.sofka.Branch;
-import ec.com.sofka.Transaction;
+import ec.com.sofka.account.Account;
+import ec.com.sofka.branch.Branch;
+import ec.com.sofka.transaction.Transaction;
+import ec.com.sofka.gateway.BusMessage;
 import ec.com.sofka.gateway.repository.TransactionRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,6 +28,9 @@ public class CreateTransactionUseCaseTest {
     private TransactionRepository transactionRepository;
 
     @Mock
+    private BusMessage busMessage;
+
+    @Mock
     private Transaction transaction;
 
     @BeforeEach
@@ -45,6 +49,8 @@ public class CreateTransactionUseCaseTest {
     void testApply_shouldReturnCustomer() {
         when(transactionRepository.createTransaction(Mockito.any(Mono.class)))
                 .thenReturn(Mono.just(transaction));
+        when(busMessage.sendMsg(Mockito.any(Mono.class)))
+                .thenReturn(Mono.empty());
         Mono<Transaction> result = createTransactionUseCase.apply(Mono.just(transaction));
         StepVerifier.create(result)
                 .expectNext(transaction)
@@ -57,6 +63,8 @@ public class CreateTransactionUseCaseTest {
     void testApply_ShouldReturnError_WhenRepositoryFails() {
         when(transactionRepository.createTransaction(Mockito.any(Mono.class)))
                 .thenReturn(Mono.error(new RuntimeException("Error saving branch")));
+        when(busMessage.sendMsg(Mockito.any(Mono.class)))
+                .thenReturn(Mono.empty());
         Mono<Transaction> result = createTransactionUseCase.apply(Mono.just(transaction));
         StepVerifier.create(result)
                 .expectError(RuntimeException.class)

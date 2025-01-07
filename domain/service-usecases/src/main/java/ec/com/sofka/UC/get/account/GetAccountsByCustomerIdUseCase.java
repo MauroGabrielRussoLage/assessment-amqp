@@ -1,6 +1,6 @@
 package ec.com.sofka.UC.get.account;
 
-import ec.com.sofka.Account;
+import ec.com.sofka.account.Account;
 import ec.com.sofka.gateway.repository.AccountRepository;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
