@@ -2,7 +2,6 @@ package ec.com.sofka.aggregate.handler;
 
 
 import ec.com.sofka.account.value.AccountId;
-import ec.com.sofka.aggregate.Operation;
 import ec.com.sofka.branch.Branch;
 import ec.com.sofka.branch.event.BranchCreated;
 import ec.com.sofka.branch.event.BranchUpdated;

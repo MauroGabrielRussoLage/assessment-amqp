@@ -4,7 +4,7 @@ package ec.com.sofka.account;
 import ec.com.sofka.account.value.AccountId;
 import ec.com.sofka.account.value.object.*;
 
-import ec.com.sofka.customer.value.CustomerId;
+import ec.com.sofka.aggregate.value.CustomerId;
 import ec.com.sofka.generic.object.Status;
 import ec.com.sofka.generic.util.Entity;
 

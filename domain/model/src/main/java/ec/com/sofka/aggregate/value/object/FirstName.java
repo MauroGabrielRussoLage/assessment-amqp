@@ -1,4 +1,4 @@
-package ec.com.sofka.customer.value.object;
+package ec.com.sofka.aggregate.value.object;
 
 import ec.com.sofka.generic.interfaces.ValueObject;
 

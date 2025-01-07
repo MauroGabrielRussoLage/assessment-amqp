@@ -1,4 +1,4 @@
-package ec.com.sofka.customer;
+package ec.com.sofka.aggregate;
 
 import ec.com.sofka.aggregate.value.CustomerId;
 import ec.com.sofka.aggregate.value.object.*;

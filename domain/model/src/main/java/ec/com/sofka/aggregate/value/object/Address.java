@@ -1,16 +1,16 @@
-package ec.com.sofka.card.value.object;
+package ec.com.sofka.aggregate.value.object;
 
 import ec.com.sofka.generic.interfaces.ValueObject;
 
-public class CardNumber implements ValueObject<String> {
+public class Address implements ValueObject<String> {
     private final String value;
 
-    private CardNumber(final String value) {
+    private Address(final String value) {
         this.value = validate(value);
     }
 
-    public static CardNumber of(final String value) {
-        return new CardNumber(value);
+    public static Address of(final String value) {
+        return new Address(value);
     }
 
     @Override

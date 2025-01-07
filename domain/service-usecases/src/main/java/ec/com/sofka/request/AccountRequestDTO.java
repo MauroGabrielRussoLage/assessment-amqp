@@ -1,12 +1,13 @@
 package ec.com.sofka.request;
 
+import ec.com.sofka.generic.util.Request;
 import ec.com.sofka.response.CardResponseDTO;
 import ec.com.sofka.response.TransactionResponseDTO;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-public class AccountRequestDTO {
+public class AccountRequestDTO extends Request {
     private int id;
     private String accountNumber;
     private String accountType;

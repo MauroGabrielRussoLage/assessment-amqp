@@ -1,16 +1,16 @@
-package ec.com.sofka.customer.value.object;
+package ec.com.sofka.aggregate.value.object;
 
 import ec.com.sofka.generic.interfaces.ValueObject;
 
-public class LastName implements ValueObject<String> {
+public class Email implements ValueObject<String> {
     private final String value;
 
-    private LastName(final String value) {
+    private Email(final String value) {
         this.value = validate(value);
     }
 
-    public static LastName of(final String value) {
-        return new LastName(value);
+    public static Email of(final String value) {
+        return new Email(value);
     }
 
     @Override
@@ -22,4 +22,5 @@ public class LastName implements ValueObject<String> {
         //TODO Validaciones
         return value;
     }
+
 }

@@ -1,16 +1,16 @@
-package ec.com.sofka.customer.value.object;
+package ec.com.sofka.aggregate.value.object;
 
 import ec.com.sofka.generic.interfaces.ValueObject;
 
-public class Email implements ValueObject<String> {
+public class Phone implements ValueObject<String> {
     private final String value;
 
-    private Email(final String value) {
+    private Phone(final String value) {
         this.value = validate(value);
     }
 
-    public static Email of(final String value) {
-        return new Email(value);
+    public static Phone of(final String value) {
+        return new Phone(value);
     }
 
     @Override
