@@ -1,6 +1,5 @@
 package ec.com.sofka.gateway.repository;
 
-import ec.com.sofka.DTO.response.AccountDTO;
 import ec.com.sofka.account.Account;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

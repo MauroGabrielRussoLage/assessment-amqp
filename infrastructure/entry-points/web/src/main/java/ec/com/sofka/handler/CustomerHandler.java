@@ -4,12 +4,13 @@ import ec.com.sofka.UC.create.CreateCustomerUseCase;
 import ec.com.sofka.UC.delete.DeleteCustomerUseCase;
 import ec.com.sofka.UC.get.customer.*;
 import ec.com.sofka.UC.update.UpdateCustomerUseCase;
-import ec.com.sofka.customException.AlreadyExistsException;
 import ec.com.sofka.customException.NotFoundException;
 import ec.com.sofka.data.request.CustomerRequestDTO;
 import ec.com.sofka.data.response.CustomerResponseDTO;
 import ec.com.sofka.mapper.DTORequestMapper;
 import ec.com.sofka.mapper.DTOResponseMapper;
+import ec.com.sofka.request.CreateCustomerRequest;
+import ec.com.sofka.response.CreateCustomerResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
@@ -47,14 +48,8 @@ public class CustomerHandler {
         this.deleteCustomerUseCase = deleteCustomerUseCase;
     }
 
-    public Mono<CustomerResponseDTO> createCustomer(CustomerRequestDTO customerRequestDTO) {
-        return Mono.just(customerRequestDTO)
-                .onErrorResume(e -> {
-                    if (e instanceof AlreadyExistsException) {
-                        return Mono.error(new ResponseStatusException(HttpStatus.CONFLICT, "Customer already exists"));
-                    }
-                    return Mono.error(new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error"));
-                });
+    public Mono<CreateCustomerResponse> createCustomer(CreateCustomerRequest request) {
+        return createCustomerUseCase.apply(Mono.just(request));
     }
 
     public Mono<CustomerResponseDTO> getCustomerById(CustomerRequestDTO customerRequestDTO) {
@@ -110,11 +105,11 @@ public class CustomerHandler {
     }
 
     public Flux<CustomerResponseDTO> getAllCustomers() {
-        return getAllCustomersUseCase.apply()
+        return null;/*getAllCustomersUseCase.apply()
                 .flatMap(customer -> DTOResponseMapper.toCustomerResponseDTO.apply(Mono.just(customer)))
                 .onErrorResume(e -> {
                     return Mono.error(new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error fetching all customers"));
-                });
+                });*/
     }
 
     public Mono<CustomerResponseDTO> updateCustomer(CustomerRequestDTO customerRequestDTO) {

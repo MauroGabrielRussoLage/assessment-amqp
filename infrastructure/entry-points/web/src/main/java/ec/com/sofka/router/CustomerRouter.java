@@ -3,6 +3,7 @@ package ec.com.sofka.router;
 import ec.com.sofka.data.request.CustomerRequestDTO;
 import ec.com.sofka.data.response.CustomerResponseDTO;
 import ec.com.sofka.handler.CustomerHandler;
+import ec.com.sofka.request.CreateCustomerRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -266,7 +267,7 @@ public class CustomerRouter {
     }
 
     private Mono<ServerResponse> createCustomer(ServerRequest request) {
-        return request.bodyToMono(CustomerRequestDTO.class)
+        return request.bodyToMono(CreateCustomerRequest.class)
                 .flatMap(customerHandler::createCustomer)
                 .flatMap(customerResponseDTO -> ServerResponse.status(HttpStatus.CREATED)
                         .contentType(MediaType.APPLICATION_JSON).bodyValue(customerResponseDTO));

@@ -1,6 +1,6 @@
 package ec.com.sofka.serviceAdapter;
 
-import ec.com.sofka.response.CustomerDTO;
+import ec.com.sofka.gateway.dto.CustomerDTO;
 import ec.com.sofka.aggregate.Customer;
 import ec.com.sofka.aggregate.value.object.*;
 import ec.com.sofka.data.CustomerDocument;

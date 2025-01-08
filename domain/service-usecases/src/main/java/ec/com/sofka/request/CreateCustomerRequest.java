@@ -2,7 +2,7 @@ package ec.com.sofka.request;
 
 import ec.com.sofka.generic.util.Request;
 
-public class CustomerRequestDTO extends Request {
+public class CreateCustomerRequest extends Request {
     protected String id;
     protected String firstName;
     protected String lastName;
@@ -11,8 +11,8 @@ public class CustomerRequestDTO extends Request {
     protected String address;
     protected String status;
 
-    public CustomerRequestDTO(String aggregateId, String address, String email, String firstName, String id, String lastName, String phone, String status) {
-        super(aggregateId);
+    public CreateCustomerRequest(String address, String email, String firstName, String id, String lastName, String phone, String status) {
+        super(null);
         this.address = address;
         this.email = email;
         this.firstName = firstName;
@@ -22,7 +22,7 @@ public class CustomerRequestDTO extends Request {
         this.status = status;
     }
 
-    public CustomerRequestDTO(String aggregateId) {
+    public CreateCustomerRequest(String aggregateId) {
         super(aggregateId);
     }
 

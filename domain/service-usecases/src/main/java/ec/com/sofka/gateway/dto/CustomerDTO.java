@@ -1,4 +1,4 @@
-package ec.com.sofka.response;
+package ec.com.sofka.gateway.dto;
 
 public class CustomerDTO {
     protected String id;
