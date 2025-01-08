@@ -3,7 +3,6 @@ package ec.com.sofka.request;
 import ec.com.sofka.generic.util.Request;
 
 public class CreateCustomerRequest extends Request {
-    protected String id;
     protected String firstName;
     protected String lastName;
     protected String email;
@@ -11,12 +10,11 @@ public class CreateCustomerRequest extends Request {
     protected String address;
     protected String status;
 
-    public CreateCustomerRequest(String address, String email, String firstName, String id, String lastName, String phone, String status) {
+    public CreateCustomerRequest(String address, String email, String firstName, String lastName, String phone, String status) {
         super(null);
         this.address = address;
         this.email = email;
         this.firstName = firstName;
-        this.id = id;
         this.lastName = lastName;
         this.phone = phone;
         this.status = status;
@@ -48,14 +46,6 @@ public class CreateCustomerRequest extends Request {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getLastName() {
