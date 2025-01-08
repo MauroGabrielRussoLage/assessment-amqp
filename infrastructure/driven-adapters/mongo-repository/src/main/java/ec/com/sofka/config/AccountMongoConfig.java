@@ -1,6 +1,8 @@
 package ec.com.sofka.config;
 
 import com.mongodb.ConnectionString;
+import com.mongodb.reactivestreams.client.MongoClient;
+import com.mongodb.reactivestreams.client.MongoClients;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -13,16 +15,19 @@ import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory;
 import org.springframework.data.mongodb.core.SimpleReactiveMongoDatabaseFactory;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
 
 @Configuration
-@EnableMongoRepositories(basePackages = "ec.com.sofka.serviceAdapter",
-        mongoTemplateRef = "accountMongoTemplate")
+@EnableReactiveMongoRepositories(basePackages = "ec.com.sofka.serviceAdapter",
+        reactiveMongoTemplateRef = "accountReactiveMongoTemplate")
 public class AccountMongoConfig {
+    @Value("${spring.data.mongodb.accounts-uri}")
+    private String accountsUri;
+
     @Primary
     @Bean(name = "accountsReactiveDatabaseFactory")
-    public ReactiveMongoDatabaseFactory accountsDatabaseFactory(
-            @Value("${spring.data.mongodb.accounts-uri}") String uri) {
-        return new SimpleReactiveMongoDatabaseFactory(new ConnectionString(uri));
+    public ReactiveMongoDatabaseFactory accountsDatabaseFactory() {
+        return new SimpleReactiveMongoDatabaseFactory(new ConnectionString(accountsUri));
     }
 
     @Primary

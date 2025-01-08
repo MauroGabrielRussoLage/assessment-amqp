@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Document(collection = "events")
+@Document(collection = "Event")
 public class EventDocument {
     @Id
     private String id;

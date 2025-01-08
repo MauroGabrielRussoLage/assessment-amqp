@@ -4,6 +4,7 @@ import ec.com.sofka.JSONMap;
 import ec.com.sofka.data.EventDocument;
 import ec.com.sofka.gateway.EventStore;
 import ec.com.sofka.generic.domain.DomainEvent;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -21,7 +22,7 @@ public class EventAdapter implements EventStore {
     private final JSONMap mapper;
     private final ReactiveMongoTemplate eventMongoTemplate;
 
-    public EventAdapter(JSONMap mapper, ReactiveMongoTemplate eventMongoTemplate) {
+    public EventAdapter(JSONMap mapper, @Qualifier("eventReactiveMongoTemplate") ReactiveMongoTemplate eventMongoTemplate) {
         this.mapper = mapper;
         this.eventMongoTemplate = eventMongoTemplate;
     }
