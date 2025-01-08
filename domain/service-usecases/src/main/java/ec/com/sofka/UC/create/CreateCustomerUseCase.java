@@ -33,7 +33,7 @@ public class CreateCustomerUseCase {
                      Status.of(customerRequestDTO.getStatus())
             );
             customer.getUncommittedEvents().forEach(domainEvent -> {
-                repository.save(Mono.just(domainEvent));
+                repository.save(Mono.just(domainEvent)).subscribe();
             });
             customer.markEventsAsCommitted();
             CustomerDTO customerDTO = new CustomerDTO(
@@ -45,8 +45,7 @@ public class CreateCustomerUseCase {
                     customer.getPhone().getValue(),
                     customer.getStatus().getValue()
             );
-            customerRepository.createCustomer(Mono.just(customerDTO));
-            return Mono.just(new CreateCustomerResponse("ok"));
+            return customerRepository.createCustomer(Mono.just(customerDTO)).map(response -> new CreateCustomerResponse("ok"));
         }
         );
     }
