@@ -2,7 +2,7 @@ package ec.com.sofka.request;
 
 import ec.com.sofka.generic.util.Request;
 
-public class CreateCustomerRequest extends Request {
+public class CustomerRequest extends Request {
     protected String firstName;
     protected String lastName;
     protected String email;
@@ -11,7 +11,7 @@ public class CreateCustomerRequest extends Request {
     protected String status;
 
     // Constructores existentes
-    public CreateCustomerRequest(String address, String email, String firstName, String lastName, String phone, String status) {
+    public CustomerRequest(String address, String email, String firstName, String lastName, String phone, String status) {
         super(null);
         this.address = address;
         this.email = email;
@@ -21,7 +21,7 @@ public class CreateCustomerRequest extends Request {
         this.status = status;
     }
 
-    public CreateCustomerRequest(String aggregateId) {
+    public CustomerRequest(String aggregateId) {
         super(aggregateId);
     }
 
@@ -74,7 +74,6 @@ public class CreateCustomerRequest extends Request {
         this.status = status;
     }
 
-    // Implementación del patrón Builder
     public static class Builder {
         private String firstName;
         private String lastName;
@@ -113,8 +112,8 @@ public class CreateCustomerRequest extends Request {
             return this;
         }
 
-        public CreateCustomerRequest build() {
-            return new CreateCustomerRequest(address, email, firstName, lastName, phone, status);
+        public CustomerRequest build() {
+            return new CustomerRequest(address, email, firstName, lastName, phone, status);
         }
     }
 }

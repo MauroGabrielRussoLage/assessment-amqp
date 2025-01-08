@@ -11,8 +11,8 @@ public class CustomerUpdated extends DomainEvent {
     private String address;
     private String status;
 
-    public CustomerUpdated(String eventType, String address, String customerId, String email, String firstName, String lastName, String phone, String status) {
-        super(eventType);
+    public CustomerUpdated(String address, String customerId, String email, String firstName, String lastName, String phone, String status) {
+        super(EventsEnum.CUSTOMER_UPDATED.name());
         this.address = address;
         this.customerId = customerId;
         this.email = email;

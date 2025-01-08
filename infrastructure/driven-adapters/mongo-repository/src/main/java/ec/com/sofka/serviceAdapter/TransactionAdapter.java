@@ -1,10 +1,11 @@
 package ec.com.sofka.serviceAdapter;
 
+import ec.com.sofka.gateway.dto.TransactionDTO;
 import ec.com.sofka.transaction.Transaction;
 import ec.com.sofka.data.TransactionDocument;
 import ec.com.sofka.gateway.repository.TransactionRepository;
-import ec.com.sofka.mapper.DocumentToModelMapper;
-import ec.com.sofka.mapper.ModelToDocumentMapper;
+import ec.com.sofka.mapper.DocumentToDTOMapper;
+import ec.com.sofka.mapper.DTOToDocumentMapper;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -23,77 +24,67 @@ public class TransactionAdapter implements TransactionRepository {
     }
 
     @Override
-    public Mono<Transaction> createTransaction(Mono<Transaction> transaction) {
-        return transaction.flatMap(transactionModel -> ModelToDocumentMapper.toTransaction.apply(Mono.just(transactionModel)))
+    public Mono<TransactionDTO> createTransaction(Mono<TransactionDTO> transaction) {
+        return transaction.flatMap(transactionModel -> DTOToDocumentMapper.toTransaction.apply(Mono.just(transactionModel)))
                 .flatMap(reactiveMongoTemplate::save)
-                .flatMap(transactionDocument -> DocumentToModelMapper.toTransaction.apply(Mono.just(transactionDocument)));
+                .flatMap(transactionDocument -> DocumentToDTOMapper.toTransaction.apply(Mono.just(transactionDocument)));
     }
 
     @Override
-    public Mono<Transaction> findTransactionById(Mono<Integer> id) {
+    public Mono<TransactionDTO> findTransactionById(Mono<String> id) {
         return id.flatMap(transactionId -> reactiveMongoTemplate.findById(transactionId, TransactionDocument.class))
-                .flatMap(transactionDocument -> DocumentToModelMapper.toTransaction.apply(Mono.just(transactionDocument)));
+                .flatMap(transactionDocument -> DocumentToDTOMapper.toTransaction.apply(Mono.just(transactionDocument)));
     }
 
     @Override
-    public Flux<Transaction> findAll() {
+    public Flux<TransactionDTO> findAll() {
         return reactiveMongoTemplate.findAll(TransactionDocument.class)
-                .flatMap(transactionDocument -> DocumentToModelMapper.toTransaction.apply(Mono.just(transactionDocument)));
+                .flatMap(transactionDocument -> DocumentToDTOMapper.toTransaction.apply(Mono.just(transactionDocument)));
     }
 
     @Override
-    public Flux<Transaction> findTransactionsByDestinationAccountId(Mono<Integer> id) {
+    public Flux<TransactionDTO> findTransactionsByDestinationAccountId(Mono<String> id) {
         return id.flatMapMany(branchId -> {
             Query query = new Query(Criteria.where("destinationAccount").is(branchId));
             return reactiveMongoTemplate.findOne(query, TransactionDocument.class)
-                    .flatMap(transactionDocument -> DocumentToModelMapper
+                    .flatMap(transactionDocument -> DocumentToDTOMapper
                             .toTransaction.apply(Mono.just(transactionDocument)));
         });
     }
 
     @Override
-    public Flux<Transaction> findTransactionsBySourceAccountId(Mono<Integer> id) {
+    public Flux<TransactionDTO> findTransactionsBySourceAccountId(Mono<String> id) {
         return id.flatMapMany(branchId -> {
             Query query = new Query(Criteria.where("sourceAccount").is(branchId));
             return reactiveMongoTemplate.findOne(query, TransactionDocument.class)
-                    .flatMap(transactionDocument -> DocumentToModelMapper
+                    .flatMap(transactionDocument -> DocumentToDTOMapper
                             .toTransaction.apply(Mono.just(transactionDocument)));
         });
     }
 
     @Override
-    public Flux<Transaction> findTransactionsByBranchId(Mono<Integer> id) {
-        return id.flatMapMany(branchId -> {
-            Query query = new Query(Criteria.where("branch").is(branchId));
-            return reactiveMongoTemplate.findOne(query, TransactionDocument.class)
-                    .flatMap(transactionDocument -> DocumentToModelMapper
-                            .toTransaction.apply(Mono.just(transactionDocument)));
-        });
-    }
-
-    @Override
-    public Flux<Transaction> findTransactionsByDate(Mono<LocalDateTime> date) {
+    public Flux<TransactionDTO> findTransactionsByDate(Mono<LocalDateTime> date) {
         return date.flatMapMany(localDateTime ->
                         reactiveMongoTemplate.find(Query.query(Criteria.where("date").is(localDateTime)),
                                 TransactionDocument.class))
-                .flatMap(transactionDocument -> DocumentToModelMapper.toTransaction.apply(Mono.just(transactionDocument)));
+                .flatMap(transactionDocument -> DocumentToDTOMapper.toTransaction.apply(Mono.just(transactionDocument)));
     }
 
     @Override
-    public Flux<Transaction> findTransactionsByType(Mono<String> type) {
+    public Flux<TransactionDTO> findTransactionsByType(Mono<String> type) {
         return type.flatMapMany(strType ->
                         reactiveMongoTemplate.find(Query.query(Criteria.where("type").is(strType)),
                                 TransactionDocument.class))
-                .flatMap(transactionDocument -> DocumentToModelMapper.toTransaction.apply(Mono.just(transactionDocument)));
+                .flatMap(transactionDocument -> DocumentToDTOMapper.toTransaction.apply(Mono.just(transactionDocument)));
     }
 
     @Override
-    public Mono<Transaction> updateTransaction(Mono<Transaction> transaction) {
+    public Mono<TransactionDTO> updateTransaction(Mono<TransactionDTO> transaction) {
         return null;
     }
 
     @Override
-    public Mono<Void> deleteById(Mono<Integer> id) {
+    public Mono<Void> deleteById(Mono<String> id) {
         return id.flatMap(transactionId -> reactiveMongoTemplate
                         .remove(Query.query(Criteria.where("_id").is(transactionId)), TransactionDocument.class))
                 .then();

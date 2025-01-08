@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 @Document(collection = "Transaction")
 public class TransactionDocument {
     @Id
-    private int id;
+    private String id;
     @NotNull(message = "Transaction date is required")
     private LocalDateTime date;
     @NotNull(message = "Transaction's type is required")
@@ -35,10 +35,9 @@ public class TransactionDocument {
     private BigDecimal amount;
     @Size(max = 255, message = "Description cannot exceed 255 characters")
     private String description;
-    @DBRef
-    @NotNull(message = "Destination account is required")
-    private AccountDocument destinationAccount;
-    @DBRef
-    @NotNull(message = "Source account is required")
-    private AccountDocument sourceAccount;
+    @NotNull(message = "Destination account id is required")
+    private String destinationAccountId;
+    @NotNull(message = "Source account id is required")
+    private String sourceAccountId;
+    private String status;
 }

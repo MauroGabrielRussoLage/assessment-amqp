@@ -1,12 +1,10 @@
 package ec.com.sofka.response;
 
-import ec.com.sofka.generic.util.Request;
 
-
-public class CreateCustomerResponse {
+public class AccountResponse {
     protected String message;
 
-    public CreateCustomerResponse(String message) {
+    public AccountResponse(String message) {
         this.message = message;
     }
 

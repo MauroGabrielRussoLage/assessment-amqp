@@ -1,7 +1,7 @@
 package ec.com.sofka.router;
 
 import ec.com.sofka.data.request.AccountRequestDTO;
-import ec.com.sofka.data.request.CreateCustomerDTO;
+import ec.com.sofka.data.request.CustomerRequestDTO;
 import ec.com.sofka.data.response.AccountResponseDTO;
 import ec.com.sofka.handler.AccountHandler;
 import io.swagger.v3.oas.annotations.Operation;
@@ -110,7 +110,7 @@ public class AccountRouter {
                                     required = true,
                                     content = @Content(
                                             mediaType = "application/json",
-                                            schema = @Schema(implementation = CreateCustomerDTO.class)
+                                            schema = @Schema(implementation = CustomerRequestDTO.class)
                                     )
                             ),
                             responses = {
@@ -233,7 +233,7 @@ public class AccountRouter {
     }
 
     private Mono<ServerResponse> getAccountsByCustomerId(ServerRequest request) {
-        return request.bodyToMono(CreateCustomerDTO.class)
+        return request.bodyToMono(CustomerRequestDTO.class)
                 .flatMapMany(accountHandler::getAccountsByCustomerId)
                 .collectList()
                 .flatMap(accountResponseDTOs -> ServerResponse.status(accountResponseDTOs.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.FOUND)

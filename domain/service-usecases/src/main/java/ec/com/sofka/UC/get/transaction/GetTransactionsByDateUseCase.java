@@ -1,5 +1,6 @@
 package ec.com.sofka.UC.get.transaction;
 
+import ec.com.sofka.gateway.dto.TransactionDTO;
 import ec.com.sofka.transaction.Transaction;
 import ec.com.sofka.gateway.repository.TransactionRepository;
 import org.springframework.stereotype.Component;
@@ -15,7 +16,7 @@ public class GetTransactionsByDateUseCase {
         this.repository = repository;
     }
 
-    public Flux<Transaction> apply(LocalDateTime date) {
+    public Flux<TransactionDTO> apply(LocalDateTime date) {
         return null;
     }
 }

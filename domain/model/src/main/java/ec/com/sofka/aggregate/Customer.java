@@ -1,16 +1,21 @@
 package ec.com.sofka.aggregate;
 
 import ec.com.sofka.account.Account;
-import ec.com.sofka.account.value.AccountNumber;
-import ec.com.sofka.account.value.AccountType;
-import ec.com.sofka.account.value.Balance;
-import ec.com.sofka.aggregate.events.AccountCreated;
-import ec.com.sofka.aggregate.events.CustomerCreated;
+import ec.com.sofka.account.value.AccountId;
+import ec.com.sofka.account.value.object.AccountNumber;
+import ec.com.sofka.account.value.object.AccountType;
+import ec.com.sofka.account.value.object.Balance;
+import ec.com.sofka.aggregate.events.*;
 import ec.com.sofka.aggregate.value.CustomerId;
 import ec.com.sofka.aggregate.value.object.*;
 import ec.com.sofka.generic.domain.DomainEvent;
 import ec.com.sofka.generic.object.Status;
 import ec.com.sofka.generic.util.AggregateRoot;
+import ec.com.sofka.transaction.Transaction;
+import ec.com.sofka.transaction.value.object.Amount;
+import ec.com.sofka.transaction.value.object.Date;
+import ec.com.sofka.transaction.value.object.Description;
+import ec.com.sofka.transaction.value.object.Type;
 
 import java.util.List;
 
@@ -22,6 +27,7 @@ public class Customer extends AggregateRoot<CustomerId> {
     protected Address address;
     protected Status status;
     protected List<Account> accounts;
+    protected List<Transaction> transactions;
 
     public Customer(final String id) {
         super(CustomerId.of(id));
@@ -39,14 +45,52 @@ public class Customer extends AggregateRoot<CustomerId> {
         addEvent(new CustomerCreated(address.getValue(), email.getValue(), firstName.getValue(), lastName.getValue(), phone.getValue(), status.getValue())).apply();
     }
 
-    public void addAccount(AccountNumber accountNumber, AccountType accountType, Balance balance, Status status) {
+    public void addAccount(AccountNumber accountNumber, AccountType accountType, Balance balance, Status status, CustomerId customerId) {
         AccountCreated accountCreatedEvent = new AccountCreated(
+                accountNumber.getValue(),
+                accountType.getValue(),
+                balance.getValue(),
+                status.getValue(),
+                customerId.getValue()
+        );
+        addEvent(accountCreatedEvent).apply();
+    }
+
+    public void updateAccount(AccountNumber accountNumber, AccountType accountType, Balance balance, Status status, CustomerId customerId) {
+        AccountUpdated accountUpdatedEvent = new AccountUpdated(
                 accountNumber,
                 accountType,
                 balance,
-                status
+                status,
+                customerId
         );
-        addEvent(accountCreatedEvent).apply();
+        addEvent(accountUpdatedEvent).apply();
+    }
+
+    public void addTransaction(Amount amount, Date date, Description description, AccountId destinationAccountId, AccountId sourceAccountId, Status status, Type type) {
+        TransactionCreated transactionCreatedEvent = new TransactionCreated(
+                amount.getValue(),
+                date.getValue(),
+                description.getValue(),
+                destinationAccountId.getValue(),
+                sourceAccountId.getValue(),
+                status.getValue(),
+                type.getValue()
+        );
+        addEvent(transactionCreatedEvent).apply();
+    }
+
+    public void updateTransaction(Amount amount, Date date, Description description, AccountId destinationAccountId, AccountId sourceAccountId, Status status, Type type) {
+        TransactionUpdated transactionUpdatedEvent = new TransactionUpdated(
+                amount,
+                date,
+                description,
+                destinationAccountId,
+                sourceAccountId,
+                status,
+                type
+        );
+        addEvent(transactionUpdatedEvent).apply();
     }
 
     //To rebuild the aggregate
@@ -104,5 +148,21 @@ public class Customer extends AggregateRoot<CustomerId> {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public List<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
+    }
+
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
     }
 }

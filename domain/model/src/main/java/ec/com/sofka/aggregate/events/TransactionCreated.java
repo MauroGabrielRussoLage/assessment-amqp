@@ -1,12 +1,17 @@
-package ec.com.sofka.request;
+package ec.com.sofka.aggregate.events;
 
-import ec.com.sofka.generic.util.Request;
+import ec.com.sofka.account.value.AccountId;
+import ec.com.sofka.generic.domain.DomainEvent;
+import ec.com.sofka.generic.object.Status;
+import ec.com.sofka.transaction.value.object.Amount;
+import ec.com.sofka.transaction.value.object.Date;
+import ec.com.sofka.transaction.value.object.Description;
+import ec.com.sofka.transaction.value.object.Type;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class TransactionRequestDTO extends Request {
-    private String id;
+public class TransactionCreated extends DomainEvent {
     private LocalDateTime date;
     private String type;
     private BigDecimal amount;
@@ -15,20 +20,19 @@ public class TransactionRequestDTO extends Request {
     private String sourceAccountId;
     private String status;
 
-    public TransactionRequestDTO(String aggregateId, BigDecimal amount, LocalDateTime date, String description, String destinationAccountId, String id, String sourceAccountId, String status, String type) {
-        super(aggregateId);
+    public TransactionCreated(BigDecimal amount, LocalDateTime date, String description, String destinationAccountId, String sourceAccountId, String status, String type) {
+        super(EventsEnum.TRANSACTION_CREATED.name());
         this.amount = amount;
         this.date = date;
         this.description = description;
         this.destinationAccountId = destinationAccountId;
-        this.id = id;
         this.sourceAccountId = sourceAccountId;
         this.status = status;
         this.type = type;
     }
 
-    public TransactionRequestDTO(String aggregateId) {
-        super(aggregateId);
+    public TransactionCreated() {
+        super(EventsEnum.TRANSACTION_CREATED.name());
     }
 
     public BigDecimal getAmount() {
@@ -61,14 +65,6 @@ public class TransactionRequestDTO extends Request {
 
     public void setDestinationAccountId(String destinationAccountId) {
         this.destinationAccountId = destinationAccountId;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getSourceAccountId() {

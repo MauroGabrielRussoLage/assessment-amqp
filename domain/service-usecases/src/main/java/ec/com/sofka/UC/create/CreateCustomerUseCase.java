@@ -1,13 +1,13 @@
 package ec.com.sofka.UC.create;
 
-import ec.com.sofka.request.CreateCustomerRequest;
+import ec.com.sofka.request.CustomerRequest;
 import ec.com.sofka.gateway.dto.CustomerDTO;
 import ec.com.sofka.aggregate.Customer;
 import ec.com.sofka.aggregate.value.object.*;
 import ec.com.sofka.gateway.EventStore;
 import ec.com.sofka.gateway.repository.CustomerRepository;
 import ec.com.sofka.generic.object.Status;
-import ec.com.sofka.response.CreateCustomerResponse;
+import ec.com.sofka.response.CustomerResponse;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
@@ -21,8 +21,7 @@ public class CreateCustomerUseCase {
         this.customerRepository = customerRepository;
     }
 
-    public Mono<CreateCustomerResponse> apply(Mono<CreateCustomerRequest> customerRequest) {
-
+    public Mono<CustomerResponse> apply(Mono<CustomerRequest> customerRequest) {
         return customerRequest.flatMap(customerRequestDTO -> {
             Customer customer = new Customer(
                      Address.of(customerRequestDTO.getAddress()),
@@ -45,7 +44,7 @@ public class CreateCustomerUseCase {
                     customer.getPhone().getValue(),
                     customer.getStatus().getValue()
             );
-            return customerRepository.createCustomer(Mono.just(customerDTO)).map(response -> new CreateCustomerResponse("ok"));
+            return customerRepository.createCustomer(Mono.just(customerDTO)).map(response -> new CustomerResponse("ok"));
         }
         );
     }

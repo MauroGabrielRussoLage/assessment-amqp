@@ -1,5 +1,6 @@
 package ec.com.sofka.UC.get.transaction;
 
+import ec.com.sofka.gateway.dto.TransactionDTO;
 import ec.com.sofka.transaction.Transaction;
 import ec.com.sofka.gateway.repository.TransactionRepository;
 import org.springframework.stereotype.Component;
@@ -13,7 +14,7 @@ public class GetTransactionsByTypeUseCase {
         this.repository = repository;
     }
 
-    public Flux<Transaction> apply(String type) {
+    public Flux<TransactionDTO> apply(String type) {
         return null;
     }
 }

@@ -1,16 +1,20 @@
-package ec.com.sofka.account.value;
+package ec.com.sofka.account.value.object;
 
 import ec.com.sofka.generic.interfaces.ValueObject;
 
-public class AccountType implements ValueObject<String> {
+public class AccountNumber implements ValueObject<String> {
     private final String value;
 
-    public AccountType(final String value) {
+    public AccountNumber() {
+        this.value = null;
+    }
+
+    public AccountNumber(final String value) {
         this.value = validate(value);
     }
 
-    public static AccountType of(final String value) {
-        return new AccountType(value);
+    public static AccountNumber of(final String value) {
+        return new AccountNumber(value);
     }
 
     @Override
@@ -22,4 +26,5 @@ public class AccountType implements ValueObject<String> {
         //TODO Validaciones
         return value;
     }
+
 }

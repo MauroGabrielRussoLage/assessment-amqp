@@ -1,8 +1,6 @@
 package ec.com.sofka.UC.create;
 
 import ec.com.sofka.account.Account;
-import ec.com.sofka.branch.Branch;
-import ec.com.sofka.card.Card;
 import ec.com.sofka.transaction.Transaction;
 import ec.com.sofka.gateway.repository.AccountRepository;
 import org.junit.jupiter.api.BeforeEach;

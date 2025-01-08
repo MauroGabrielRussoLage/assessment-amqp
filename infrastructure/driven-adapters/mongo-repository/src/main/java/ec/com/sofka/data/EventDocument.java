@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.sql.Timestamp;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.stream.Collectors;
 
 @Data
@@ -24,7 +25,7 @@ public class EventDocument {
     private String aggregateId;
     private String eventType;
     private String eventData;
-    private Timestamp timestamp;
+    private String timestamp;
     private Long version;
 
     public static String wrapEvent(DomainEvent domainEvent, JSONMap eventSerializer){
@@ -33,7 +34,6 @@ public class EventDocument {
 
     public DomainEvent deserializeEvent(JSONMap eventSerializer) {
         try {
-
             String className = Arrays.stream(this.getEventType().toLowerCase().split("_"))
                     .map(part -> Character.toUpperCase(part.charAt(0)) + part.substring(1))
                     .collect(Collectors.joining());

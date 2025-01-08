@@ -22,7 +22,7 @@ import java.util.List;
 @Document(collection = "Account")
 public class AccountDocument {
     @Id
-    private int id;
+    private String id;
     @NotBlank(message = "Account number is required")
     @Pattern(regexp = "^[a-zA-Z0-9]{10,20}$", message = "Account number must be alphanumeric and between 10 and 20 characters")
     private String accountNumber;
@@ -32,8 +32,7 @@ public class AccountDocument {
     @NotNull(message = "Balance is required")
     @DecimalMin(value = "0", message = "Balance must not be negative")
     private BigDecimal balance;
-    @DBRef
-    @NotNull(message = "Transaction is required")
-    private List<TransactionDocument> transactions;
+    private String status;
+    private String customerId;
 }
 

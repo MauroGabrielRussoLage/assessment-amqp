@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class CustomerResponseDTO {
-    private int id;
+    private String id;
     private String firstName;
     private String lastName;
     private String email;

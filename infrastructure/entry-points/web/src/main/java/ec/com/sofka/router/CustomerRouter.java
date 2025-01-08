@@ -1,9 +1,8 @@
 package ec.com.sofka.router;
 
-import ec.com.sofka.data.request.CreateCustomerDTO;
+import ec.com.sofka.data.request.CustomerRequestDTO;
 import ec.com.sofka.data.response.CustomerResponseDTO;
 import ec.com.sofka.handler.CustomerHandler;
-import ec.com.sofka.request.CreateCustomerRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -50,7 +49,7 @@ public class CustomerRouter {
                                     required = true,
                                     content = @Content(
                                             mediaType = "application/json",
-                                            schema = @Schema(implementation = CreateCustomerDTO.class)
+                                            schema = @Schema(implementation = CustomerRequestDTO.class)
                                     )
                             ),
                             responses = {
@@ -79,7 +78,7 @@ public class CustomerRouter {
                                     required = true,
                                     content = @Content(
                                             mediaType = "application/json",
-                                            schema = @Schema(implementation = CreateCustomerDTO.class)
+                                            schema = @Schema(implementation = CustomerRequestDTO.class)
                                     )
                             ),
                             responses = {
@@ -108,7 +107,7 @@ public class CustomerRouter {
                                     required = true,
                                     content = @Content(
                                             mediaType = "application/json",
-                                            schema = @Schema(implementation = CreateCustomerDTO.class)
+                                            schema = @Schema(implementation = CustomerRequestDTO.class)
                                     )
                             ),
                             responses = {
@@ -137,7 +136,7 @@ public class CustomerRouter {
                                     required = true,
                                     content = @Content(
                                             mediaType = "application/json",
-                                            schema = @Schema(implementation = CreateCustomerDTO.class)
+                                            schema = @Schema(implementation = CustomerRequestDTO.class)
                                     )
                             ),
                             responses = {
@@ -166,7 +165,7 @@ public class CustomerRouter {
                                     required = true,
                                     content = @Content(
                                             mediaType = "application/json",
-                                            schema = @Schema(implementation = CreateCustomerDTO.class)
+                                            schema = @Schema(implementation = CustomerRequestDTO.class)
                                     )
                             ),
                             responses = {
@@ -215,7 +214,7 @@ public class CustomerRouter {
                                     required = true,
                                     content = @Content(
                                             mediaType = "application/json",
-                                            schema = @Schema(implementation = CreateCustomerDTO.class)
+                                            schema = @Schema(implementation = CustomerRequestDTO.class)
                                     )
                             ),
                             responses = {
@@ -245,7 +244,7 @@ public class CustomerRouter {
                                     required = true,
                                     content = @Content(
                                             mediaType = "application/json",
-                                            schema = @Schema(implementation = CreateCustomerDTO.class)
+                                            schema = @Schema(implementation = CustomerRequestDTO.class)
                                     )
                             ),
                             responses = {
@@ -267,14 +266,14 @@ public class CustomerRouter {
     }
 
     private Mono<ServerResponse> createCustomer(ServerRequest request) {
-        return request.bodyToMono(CreateCustomerDTO.class)
+        return request.bodyToMono(CustomerRequestDTO.class)
                 .flatMap(customerHandler::createCustomer)
                 .flatMap(customerResponseDTO -> ServerResponse.status(HttpStatus.CREATED)
                         .contentType(MediaType.APPLICATION_JSON).bodyValue(customerResponseDTO));
     }
 
     private Mono<ServerResponse> getCustomerById(ServerRequest request) {
-        return request.bodyToMono(CreateCustomerDTO.class)
+        return request.bodyToMono(CustomerRequestDTO.class)
                 .flatMap(customerHandler::getCustomerById)
                 .flatMap(customerResponseDTO -> ServerResponse.status(HttpStatus.FOUND)
                         .contentType(MediaType.APPLICATION_JSON).bodyValue(customerResponseDTO))
@@ -282,7 +281,7 @@ public class CustomerRouter {
     }
 
     private Mono<ServerResponse> getCustomerByFirstName(ServerRequest request) {
-        return request.bodyToMono(CreateCustomerDTO.class)
+        return request.bodyToMono(CustomerRequestDTO.class)
                 .flatMap(customerHandler::getCustomerByFirstName)
                 .flatMap(customerResponseDTO -> ServerResponse.status(HttpStatus.FOUND)
                         .contentType(MediaType.APPLICATION_JSON).bodyValue(customerResponseDTO))
@@ -290,7 +289,7 @@ public class CustomerRouter {
     }
 
     private Mono<ServerResponse> getCustomerByLastName(ServerRequest request) {
-        return request.bodyToMono(CreateCustomerDTO.class)
+        return request.bodyToMono(CustomerRequestDTO.class)
                 .flatMap(customerHandler::getCustomerByLastName)
                 .flatMap(customerResponseDTO -> ServerResponse.status(HttpStatus.FOUND)
                         .contentType(MediaType.APPLICATION_JSON).bodyValue(customerResponseDTO))
@@ -298,7 +297,7 @@ public class CustomerRouter {
     }
 
     private Mono<ServerResponse> getCustomerByEmail(ServerRequest request) {
-        return request.bodyToMono(CreateCustomerDTO.class)
+        return request.bodyToMono(CustomerRequestDTO.class)
                 .flatMap(customerHandler::getCustomerByEmail)
                 .flatMap(customerResponseDTO -> ServerResponse.status(HttpStatus.FOUND)
                         .contentType(MediaType.APPLICATION_JSON).bodyValue(customerResponseDTO))
@@ -313,7 +312,7 @@ public class CustomerRouter {
     }
 
     private Mono<ServerResponse> updateCustomer(ServerRequest request) {
-        return request.bodyToMono(CreateCustomerDTO.class)
+        return request.bodyToMono(CustomerRequestDTO.class)
                 .flatMap(customerHandler::updateCustomer)
                 .flatMap(customerResponseDTO -> ServerResponse.status(HttpStatus.OK)
                         .contentType(MediaType.APPLICATION_JSON).bodyValue(customerResponseDTO))
@@ -321,7 +320,7 @@ public class CustomerRouter {
     }
 
     private Mono<ServerResponse> deleteCustomer(ServerRequest request) {
-        return request.bodyToMono(CreateCustomerDTO.class)
+        return request.bodyToMono(CustomerRequestDTO.class)
                 .flatMap(customerHandler::deleteCustomer)
                 .then(ServerResponse.noContent().build())
                 .onErrorResume(e -> ServerResponse.status(HttpStatus.NOT_FOUND).build());

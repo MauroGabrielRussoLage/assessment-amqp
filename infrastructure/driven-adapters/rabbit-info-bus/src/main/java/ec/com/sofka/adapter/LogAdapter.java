@@ -6,6 +6,7 @@ import ec.com.sofka.data.LogDocument;
 
 
 import ec.com.sofka.gateway.repository.LogRepository;
+import ec.com.sofka.mapper.DTOToDocumentMapper;
 import ec.com.sofka.mapper.ModelToDocumentMapper;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;

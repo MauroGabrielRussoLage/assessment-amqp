@@ -9,10 +9,13 @@ import ec.com.sofka.UC.update.UpdateAccountUseCase;
 import ec.com.sofka.customException.AlreadyExistsException;
 import ec.com.sofka.customException.NotFoundException;
 import ec.com.sofka.data.request.AccountRequestDTO;
-import ec.com.sofka.data.request.CreateCustomerDTO;
+import ec.com.sofka.data.request.CustomerRequestDTO;
 import ec.com.sofka.data.response.AccountResponseDTO;
 import ec.com.sofka.mapper.DTORequestMapper;
 import ec.com.sofka.mapper.DTOResponseMapper;
+import ec.com.sofka.request.AccountRequest;
+import ec.com.sofka.request.CustomerRequest;
+import ec.com.sofka.response.AccountResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
@@ -56,24 +59,21 @@ public class AccountHandler {
                 });
     }
 
-    public Mono<AccountResponseDTO> createAccount(AccountRequestDTO accountRequestDTO) {
-        return DTOResponseMapper
-                .toAccountResponseDTO
-                .apply(createAccountUseCase
-                        .apply(DTORequestMapper
-                                .toAccount
-                                .apply(Mono.just(accountRequestDTO))))
-                .onErrorResume(e -> {
-                    if (e instanceof AlreadyExistsException) {
-                        return Mono.error(new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage()));
-                    }
-                    return Mono.error(new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error"));
-                });
+    public Mono<AccountResponse> createAccount(AccountRequestDTO accountRequestDTO) {
+        AccountRequest request = new AccountRequest.Builder()
+                .withAggregateId(accountRequestDTO.getAggregateId())
+                .withStatus(accountRequestDTO.getStatus())
+                .withAccountNumber(accountRequestDTO.getAccountNumber())
+                .withBalance(accountRequestDTO.getBalance())
+                .withAccountType(accountRequestDTO.getAccountType())
+                .withCustomerId(accountRequestDTO.getCustomerId())
+                .build();
+        return createAccountUseCase.apply(Mono.just(request));
     }
 
-    public Flux<AccountResponseDTO> getAccountsByCustomerId(CreateCustomerDTO createCustomerDTO) {
+    public Flux<AccountResponseDTO> getAccountsByCustomerId(CustomerRequestDTO customerRequestDTO) {
         return getAccountsByCustomerId
-                .apply(createCustomerDTO.getId())
+                .apply(customerRequestDTO.getId())
                 .flatMap(account -> DTOResponseMapper
                         .toAccountResponseDTO
                         .apply(Mono.just(account)))
@@ -95,19 +95,16 @@ public class AccountHandler {
                         Flux.error(new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error")));
     }
 
-    public Mono<AccountResponseDTO> updateAccount(AccountRequestDTO accountRequestDTO) {
-        return DTOResponseMapper
-                .toAccountResponseDTO
-                .apply(updateAccountUseCase
-                        .apply(DTORequestMapper
-                                .toAccount
-                                .apply(Mono.just(accountRequestDTO))))
-                .onErrorResume(e -> {
-                    if (e instanceof NotFoundException) {
-                        return Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found"));
-                    }
-                    return Mono.error(new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error"));
-                });
+    public Mono<AccountResponse> updateAccount(AccountRequestDTO accountRequestDTO) {
+        AccountRequest request = new AccountRequest.Builder()
+                .withAggregateId(accountRequestDTO.getAggregateId())
+                .withStatus(accountRequestDTO.getStatus())
+                .withAccountNumber(accountRequestDTO.getAccountNumber())
+                .withBalance(accountRequestDTO.getBalance())
+                .withAccountType(accountRequestDTO.getAccountType())
+                .withCustomerId(accountRequestDTO.getCustomerId())
+                .build();
+        return updateAccountUseCase.apply(Mono.just(request));
     }
 
     public Mono<Void> deleteAccount(AccountRequestDTO accountRequestDTO) {

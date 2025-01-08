@@ -1,6 +1,7 @@
 package ec.com.sofka.UC.get.account;
 
 import ec.com.sofka.account.Account;
+import ec.com.sofka.gateway.dto.AccountDTO;
 import ec.com.sofka.gateway.repository.AccountRepository;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
@@ -13,7 +14,7 @@ public class GetAllAccountsUseCase {
         this.repository = repository;
     }
 
-    public Flux<Account> apply() {
+    public Flux<AccountDTO> apply() {
         return repository.findAll();
     }
 }

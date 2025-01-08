@@ -15,8 +15,8 @@ public class Transaction extends Entity<TransactionId> {
     private AccountId sourceAccountId;
     private Status status;
 
-    public Transaction(TransactionId id, Amount amount, Date date, Description description, AccountId destinationAccountId, AccountId sourceAccountId, Status status, Type type) {
-        super(id);
+    public Transaction(Amount amount, Date date, Description description, AccountId destinationAccountId, AccountId sourceAccountId, Status status, Type type) {
+        super(new TransactionId());
         this.amount = amount;
         this.date = date;
         this.description = description;

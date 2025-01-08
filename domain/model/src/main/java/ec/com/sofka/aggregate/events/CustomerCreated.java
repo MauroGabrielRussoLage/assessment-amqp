@@ -20,8 +20,8 @@ public class CustomerCreated extends DomainEvent {
         this.status = status;
     }
 
-    public CustomerCreated(String eventType) {
-        super(eventType);
+    public CustomerCreated() {
+        super(EventsEnum.CUSTOMER_CREATED.name());
     }
 
     public String getAddress() {

@@ -13,11 +13,13 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class TransactionRequestDTO {
-    private int id;
+    private String id;
     private LocalDateTime date;
     private String type;
     private BigDecimal amount;
     private String description;
-    private AccountRequestDTO destinationAccount;
-    private AccountRequestDTO sourceAccount;
+    private String destinationAccountId;
+    private String sourceAccountId;
+    private String status;
+    private String aggregateId;
 }

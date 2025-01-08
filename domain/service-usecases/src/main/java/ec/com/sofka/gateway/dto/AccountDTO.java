@@ -1,19 +1,16 @@
-package ec.com.sofka.request;
-
-import ec.com.sofka.generic.util.Request;
+package ec.com.sofka.gateway.dto;
 
 import java.math.BigDecimal;
 
-public class AccountRequestDTO extends Request {
-    private String id;
-    private String accountNumber;
-    private String accountType;
-    private BigDecimal balance;
-    private String status;
-    private String customerId;
+public class AccountDTO {
+    protected String id;
+    protected String accountNumber;
+    protected String accountType;
+    protected BigDecimal balance;
+    protected String status;
+    protected String customerId;
 
-    public AccountRequestDTO(String aggregateId, String accountNumber, String accountType, BigDecimal balance, String customerId, String id, String status) {
-        super(aggregateId);
+    public AccountDTO(String accountNumber, String accountType, BigDecimal balance, String customerId, String id, String status) {
         this.accountNumber = accountNumber;
         this.accountType = accountType;
         this.balance = balance;
@@ -22,9 +19,7 @@ public class AccountRequestDTO extends Request {
         this.status = status;
     }
 
-    public AccountRequestDTO(String aggregateId) {
-        super(aggregateId);
-    }
+    public AccountDTO() {}
 
     public String getAccountNumber() {
         return accountNumber;

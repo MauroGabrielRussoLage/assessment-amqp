@@ -1,11 +1,11 @@
 package ec.com.sofka.serviceAdapter;
 
-import ec.com.sofka.account.Account;
 import ec.com.sofka.data.AccountDocument;
 import ec.com.sofka.data.CustomerDocument;
+import ec.com.sofka.gateway.dto.AccountDTO;
 import ec.com.sofka.gateway.repository.AccountRepository;
-import ec.com.sofka.mapper.DocumentToModelMapper;
-import ec.com.sofka.mapper.ModelToDocumentMapper;
+import ec.com.sofka.mapper.DTOToDocumentMapper;
+import ec.com.sofka.mapper.DocumentToDTOMapper;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -24,49 +24,71 @@ public class AccountAdapter implements AccountRepository {
     }
 
     @Override
-    public Mono<Account> createAccount(Mono<Account> account) {
-        return account.flatMap(acc -> {
-            Query query = new Query(Criteria.where("_id").is(acc.getId()));
-            Update update = new Update().push("accounts", ModelToDocumentMapper.toAccount.apply(Mono.just(acc)));
-            return reactiveMongoTemplate.updateFirst(query, update, CustomerDocument.class)
-                    .flatMap(result -> result.getModifiedCount() > 0
-                            ? Mono.just(acc)
-                            : Mono.error(new RuntimeException("Failed to create account")));
-        });
+    public Mono<AccountDTO> createAccount(Mono<AccountDTO> account) {
+        return account.flatMap(accountDTO -> DTOToDocumentMapper.toAccount.apply(Mono.just(accountDTO)))
+                .flatMap(reactiveMongoTemplate::save)
+                .flatMap(accountDocument -> DocumentToDTOMapper.toAccount.apply(Mono.just(accountDocument)));
     }
 
     @Override
-    public Mono<Account> findAccountById(Mono<Integer> id) {
+    public Mono<AccountDTO> findAccountById(Mono<String> id) {
         return id.flatMap(accountId -> reactiveMongoTemplate.findById(accountId, AccountDocument.class))
-                .flatMap(accountDocument -> DocumentToModelMapper.toAccount.apply(Mono.just(accountDocument)));
+                .flatMap(accountDocument -> {
+                    AccountDTO accountDTO = new AccountDTO(
+                            accountDocument.getAccountNumber(),
+                            accountDocument.getAccountType(),
+                            accountDocument.getBalance(),
+                            accountDocument.getCustomerId(),
+                            accountDocument.getId(),
+                            accountDocument.getStatus()
+                    );
+                    return Mono.just(accountDTO);
+                });
     }
 
     @Override
-    public Flux<Account> getAccountsByCustomerId(Mono<String> customer_id) {
+    public Flux<AccountDTO> getAccountsByCustomerId(Mono<String> customer_id) {
         return customer_id.flatMapMany(customerId -> {
             Query query = new Query(Criteria.where("_id").is(customerId));
             return reactiveMongoTemplate.findOne(query, AccountDocument.class)
-                    .flatMap(accountDocument -> DocumentToModelMapper
-                            .toAccount.apply(Mono.just(accountDocument)));
+                    .flatMap(accountDocument -> {
+                        AccountDTO accountDTO = new AccountDTO(
+                                accountDocument.getAccountNumber(),
+                                accountDocument.getAccountType(),
+                                accountDocument.getBalance(),
+                                accountDocument.getCustomerId(),
+                                accountDocument.getId(),
+                                accountDocument.getStatus()
+                        );
+                        return Mono.just(accountDTO);
+                    });
         });
     }
 
     @Override
-    public Flux<Account> findAll() {
+    public Flux<AccountDTO> findAll() {
         return reactiveMongoTemplate.findAll(AccountDocument.class)
-                .flatMap(accountDocument ->
-                        DocumentToModelMapper.toAccount
-                                .apply(Mono.just(accountDocument)));
+                .flatMap(accountDocument -> {
+                    AccountDTO accountDTO = new AccountDTO(
+                            accountDocument.getAccountNumber(),
+                            accountDocument.getAccountType(),
+                            accountDocument.getBalance(),
+                            accountDocument.getCustomerId(),
+                            accountDocument.getId(),
+                            accountDocument.getStatus()
+                    );
+                    return Mono.just(accountDTO);
+                });
     }
 
     @Override
-    public Mono<Account> updateAccount(Mono<Account> account) {
+    public Mono<AccountDTO> updateAccount(Mono<AccountDTO> account) {
         return account.flatMap(acc -> {
-            Query query = new Query(Criteria.where("_id").is(acc.getId()));
+            Query query = new Query(Criteria.where("accountNumber").is(acc.getAccountNumber()));
             Update update = new Update()
-                    .set("accounts.$.number", acc.getAccountNumber())
-                    .set("accounts.$.type", acc.getAccountType())
-                    .set("accounts.$.balance", acc.getBalance());
+                    .set("accountNumber", acc.getAccountNumber())
+                    .set("accountType", acc.getAccountType())
+                    .set("balance", acc.getBalance());
             return reactiveMongoTemplate.updateFirst(query, update, AccountDocument.class)
                     .flatMap(result -> result.getModifiedCount() > 0
                             ? Mono.just(acc)
@@ -75,7 +97,7 @@ public class AccountAdapter implements AccountRepository {
     }
 
     @Override
-    public Mono<Void> deleteById(Mono<Integer> id) {
+    public Mono<Void> deleteById(Mono<String> id) {
         return id.flatMap(accountId -> reactiveMongoTemplate
                         .remove(Query.query(Criteria.where("_id").is(accountId)), AccountDocument.class))
                 .then();

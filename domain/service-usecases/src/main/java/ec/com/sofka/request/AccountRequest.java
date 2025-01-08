@@ -4,25 +4,26 @@ import ec.com.sofka.generic.util.Request;
 
 import java.math.BigDecimal;
 
-public class CreateAccountRequest extends Request {
+public class AccountRequest extends Request {
     private String accountNumber;
     private String accountType;
     private BigDecimal balance;
     private String status;
+    private String customerId;
 
-    protected CreateAccountRequest(String aggregateId) {
+    protected AccountRequest(String aggregateId) {
         super(aggregateId);
     }
 
-    public CreateAccountRequest(String aggregateId, String accountNumber, String accountType, BigDecimal balance, String status) {
+    public AccountRequest(String aggregateId,String accountNumber, String accountType, BigDecimal balance, String status, String customerId) {
         super(aggregateId);
         this.accountNumber = accountNumber;
         this.accountType = accountType;
         this.balance = balance;
         this.status = status;
+        this.customerId = customerId;
     }
 
-    // Getters and Setters
     public String getAccountNumber() {
         return accountNumber;
     }
@@ -39,21 +40,17 @@ public class CreateAccountRequest extends Request {
         return status;
     }
 
-    // Builder
-    public static Builder builder(String aggregateId) {
-        return new Builder(aggregateId);
+    public String getCustomerId() {
+        return customerId;
     }
 
     public static class Builder {
-        private final String aggregateId;
         private String accountNumber;
         private String accountType;
         private BigDecimal balance;
         private String status;
-
-        private Builder(String aggregateId) {
-            this.aggregateId = aggregateId;
-        }
+        private String customerId;
+        private String aggregateId;
 
         public Builder withAccountNumber(String accountNumber) {
             this.accountNumber = accountNumber;
@@ -75,8 +72,18 @@ public class CreateAccountRequest extends Request {
             return this;
         }
 
-        public CreateAccountRequest build() {
-            return new CreateAccountRequest(aggregateId, accountNumber, accountType, balance, status);
+        public Builder withCustomerId(String customerId) {
+            this.customerId = customerId;
+            return this;
+        }
+
+        public Builder withAggregateId(String aggregateId) {
+            this.aggregateId = aggregateId;
+            return this;
+        }
+
+        public AccountRequest build() {
+            return new AccountRequest(aggregateId, accountNumber, accountType, balance, status, customerId);
         }
     }
 }

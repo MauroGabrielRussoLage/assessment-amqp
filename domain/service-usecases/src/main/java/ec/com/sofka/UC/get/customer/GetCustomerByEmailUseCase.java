@@ -2,6 +2,7 @@ package ec.com.sofka.UC.get.customer;
 
 
 import ec.com.sofka.aggregate.Customer;
+import ec.com.sofka.gateway.dto.CustomerDTO;
 import ec.com.sofka.gateway.repository.CustomerRepository;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -14,7 +15,7 @@ public class GetCustomerByEmailUseCase {
         this.repository = repository;
     }
 
-    public Mono<Customer> apply(String email) {
-        return null;
+    public Mono<CustomerDTO> apply(String email) {
+        return repository.findCustomerByEmail(Mono.just(email));
     }
 }

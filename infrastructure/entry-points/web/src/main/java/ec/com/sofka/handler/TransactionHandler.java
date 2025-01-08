@@ -11,6 +11,9 @@ import ec.com.sofka.data.request.TransactionRequestDTO;
 import ec.com.sofka.data.response.TransactionResponseDTO;
 import ec.com.sofka.mapper.DTORequestMapper;
 import ec.com.sofka.mapper.DTOResponseMapper;
+import ec.com.sofka.request.CustomerRequest;
+import ec.com.sofka.request.TransactionRequest;
+import ec.com.sofka.response.TransactionResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
@@ -54,19 +57,18 @@ public class TransactionHandler {
         this.deleteTransactionUseCase = deleteTransactionUseCase;
     }
 
-    public Mono<TransactionResponseDTO> createTransaction(TransactionRequestDTO transactionRequestDTO) {
-        return DTOResponseMapper
-                .toTransactionResponseDTO
-                .apply(createTransactionUseCase
-                        .apply(DTORequestMapper
-                                .toTransaction
-                                .apply(Mono.just(transactionRequestDTO))))
-                .onErrorResume(e -> {
-                    if (e instanceof AlreadyExistsException) {
-                        return Mono.error(new ResponseStatusException(HttpStatus.CONFLICT, "Transaction already exists"));
-                    }
-                    return Mono.error(new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error"));
-                });
+    public Mono<TransactionResponse> createTransaction(TransactionRequestDTO transactionRequestDTO) {
+        TransactionRequest request =new TransactionRequest.Builder()
+                .withAggregateId(transactionRequestDTO.getAggregateId())
+                .withAmount(transactionRequestDTO.getAmount())
+                .withStatus(transactionRequestDTO.getStatus())
+                .withDate(transactionRequestDTO.getDate())
+                .withDescription(transactionRequestDTO.getDescription())
+                .withType(transactionRequestDTO.getType())
+                .withDestinationAccountId(transactionRequestDTO.getDestinationAccountId())
+                .withSourceAccountId(transactionRequestDTO.getSourceAccountId())
+                .build();
+        return createTransactionUseCase.apply(Mono.just(request));
     }
 
     public Mono<TransactionResponseDTO> getTransactionById(TransactionRequestDTO transactionRequestDTO) {
@@ -146,19 +148,17 @@ public class TransactionHandler {
                 });
     }
 
-    public Mono<TransactionResponseDTO> updateTransaction(TransactionRequestDTO transactionRequestDTO) {
-        return DTOResponseMapper
-                .toTransactionResponseDTO
-                .apply(updateTransactionUseCase
-                        .apply(DTORequestMapper
-                                .toTransaction
-                                .apply(Mono.just(transactionRequestDTO))))
-                .onErrorResume(e -> {
-                    if (e instanceof NotFoundException) {
-                        return Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "Transaction not found"));
-                    }
-                    return Mono.error(new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error"));
-                });
+    public Mono<TransactionResponse> updateTransaction(TransactionRequestDTO transactionRequestDTO) {
+        TransactionRequest request =new TransactionRequest.Builder()
+                .withAmount(transactionRequestDTO.getAmount())
+                .withStatus(transactionRequestDTO.getStatus())
+                .withDate(transactionRequestDTO.getDate())
+                .withDescription(transactionRequestDTO.getDescription())
+                .withType(transactionRequestDTO.getType())
+                .withDestinationAccountId(transactionRequestDTO.getDestinationAccountId())
+                .withSourceAccountId(transactionRequestDTO.getSourceAccountId())
+                .build();
+        return updateTransactionUseCase.apply(Mono.just(request));
     }
 
     public Mono<Void> deleteTransaction(TransactionRequestDTO transactionRequestDTO) {

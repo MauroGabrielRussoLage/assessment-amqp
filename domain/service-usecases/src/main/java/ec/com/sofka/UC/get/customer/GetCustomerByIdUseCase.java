@@ -1,6 +1,7 @@
 package ec.com.sofka.UC.get.customer;
 
 import ec.com.sofka.aggregate.Customer;
+import ec.com.sofka.gateway.dto.CustomerDTO;
 import ec.com.sofka.gateway.repository.CustomerRepository;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -13,7 +14,7 @@ public class GetCustomerByIdUseCase {
         this.repository = repository;
     }
 
-    public Mono<Customer> apply(String id) {
+    public Mono<CustomerDTO> apply(String id) {
         return null;
     }
 }

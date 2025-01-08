@@ -35,7 +35,7 @@ public class EventAdapter implements EventStore {
                     event.getAggregateRootId(),
                     event.getEventType(),
                     EventDocument.wrapEvent(event, mapper),
-                    Timestamp.from(event.getWhen()),
+                    event.getWhen().toString(),
                     event.getVersion()
             );
             return eventMongoTemplate.save(e).thenReturn(event);
