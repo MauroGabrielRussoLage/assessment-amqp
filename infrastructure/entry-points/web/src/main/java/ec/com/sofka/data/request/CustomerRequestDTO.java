@@ -9,8 +9,10 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class CustomerRequestDTO extends Request {
+public class CustomerRequestDTO {
     private int id;
     private String firstName;
     private String lastName;
@@ -18,10 +20,4 @@ public class CustomerRequestDTO extends Request {
     private String phone;
     private String address;
     private List<AccountRequestDTO> accounts;
-
-    protected CustomerRequestDTO(String aggregateId) {
-        super(aggregateId);
-    }
-
-
 }
