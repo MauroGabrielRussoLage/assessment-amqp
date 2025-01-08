@@ -5,7 +5,7 @@ import ec.com.sofka.UC.delete.DeleteCustomerUseCase;
 import ec.com.sofka.UC.get.customer.*;
 import ec.com.sofka.UC.update.UpdateCustomerUseCase;
 import ec.com.sofka.customException.NotFoundException;
-import ec.com.sofka.data.request.CustomerRequestDTO;
+import ec.com.sofka.data.request.CreateCustomerDTO;
 import ec.com.sofka.data.response.CustomerResponseDTO;
 import ec.com.sofka.mapper.DTORequestMapper;
 import ec.com.sofka.mapper.DTOResponseMapper;
@@ -48,15 +48,23 @@ public class CustomerHandler {
         this.deleteCustomerUseCase = deleteCustomerUseCase;
     }
 
-    public Mono<CreateCustomerResponse> createCustomer(CreateCustomerRequest request) {
+    public Mono<CreateCustomerResponse> createCustomer(CreateCustomerDTO dto) {
+        CreateCustomerRequest request =new CreateCustomerRequest.Builder()
+                .withFirstName(dto.getFirstName())
+                .withEmail(dto.getEmail())
+                .withAddress(dto.getAddress())
+                .withLastName(dto.getLastName())
+                .withPhone(dto.getPhone())
+                .withStatus(dto.getStatus())
+                .build();
         return createCustomerUseCase.apply(Mono.just(request));
     }
 
-    public Mono<CustomerResponseDTO> getCustomerById(CustomerRequestDTO customerRequestDTO) {
+    public Mono<CustomerResponseDTO> getCustomerById(CreateCustomerDTO createCustomerDTO) {
         return DTOResponseMapper
                 .toCustomerResponseDTO
                 .apply(getCustomerByIdUseCase
-                        .apply(customerRequestDTO.getId()))
+                        .apply(createCustomerDTO.getId()))
                 .onErrorResume(e -> {
                     if (e instanceof NotFoundException) {
                         return Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found"));
@@ -65,11 +73,11 @@ public class CustomerHandler {
                 });
     }
 
-    public Mono<CustomerResponseDTO> getCustomerByFirstName(CustomerRequestDTO customerRequestDTO) {
+    public Mono<CustomerResponseDTO> getCustomerByFirstName(CreateCustomerDTO createCustomerDTO) {
         return DTOResponseMapper
                 .toCustomerResponseDTO
                 .apply(getCustomerByFirstNameUseCase
-                        .apply(customerRequestDTO.getFirstName()))
+                        .apply(createCustomerDTO.getFirstName()))
                 .onErrorResume(e -> {
                     if (e instanceof NotFoundException) {
                         return Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found"));
@@ -78,11 +86,11 @@ public class CustomerHandler {
                 });
     }
 
-    public Mono<CustomerResponseDTO> getCustomerByLastName(CustomerRequestDTO customerRequestDTO) {
+    public Mono<CustomerResponseDTO> getCustomerByLastName(CreateCustomerDTO createCustomerDTO) {
         return DTOResponseMapper
                 .toCustomerResponseDTO
                 .apply(getCustomerByLastNameUseCase
-                        .apply(customerRequestDTO.getLastName()))
+                        .apply(createCustomerDTO.getLastName()))
                 .onErrorResume(e -> {
                     if (e instanceof NotFoundException) {
                         return Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found"));
@@ -91,11 +99,11 @@ public class CustomerHandler {
                 });
     }
 
-    public Mono<CustomerResponseDTO> getCustomerByEmail(CustomerRequestDTO customerRequestDTO) {
+    public Mono<CustomerResponseDTO> getCustomerByEmail(CreateCustomerDTO createCustomerDTO) {
         return DTOResponseMapper
                 .toCustomerResponseDTO
                 .apply(getCustomerByEmailUseCase
-                        .apply(customerRequestDTO.getEmail()))
+                        .apply(createCustomerDTO.getEmail()))
                 .onErrorResume(e -> {
                     if (e instanceof NotFoundException) {
                         return Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found"));
@@ -112,13 +120,13 @@ public class CustomerHandler {
                 });*/
     }
 
-    public Mono<CustomerResponseDTO> updateCustomer(CustomerRequestDTO customerRequestDTO) {
+    public Mono<CustomerResponseDTO> updateCustomer(CreateCustomerDTO createCustomerDTO) {
         return DTOResponseMapper
                 .toCustomerResponseDTO
                 .apply(updateCustomerUseCase
                         .apply(DTORequestMapper
                                 .toCustomer
-                                .apply(Mono.just(customerRequestDTO))))
+                                .apply(Mono.just(createCustomerDTO))))
                 .onErrorResume(e -> {
                     if (e instanceof NotFoundException) {
                         return Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found"));
@@ -127,8 +135,8 @@ public class CustomerHandler {
                 });
     }
 
-    public Mono<Void> deleteCustomer(CustomerRequestDTO customerRequestDTO) {
-        return deleteCustomerUseCase.apply(customerRequestDTO.getId())
+    public Mono<Void> deleteCustomer(CreateCustomerDTO createCustomerDTO) {
+        return deleteCustomerUseCase.apply(createCustomerDTO.getId())
                 .onErrorResume(e -> {
                     if (e instanceof NotFoundException) {
                         return Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found"));

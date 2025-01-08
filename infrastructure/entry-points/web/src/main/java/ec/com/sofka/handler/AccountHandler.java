@@ -9,7 +9,7 @@ import ec.com.sofka.UC.update.UpdateAccountUseCase;
 import ec.com.sofka.customException.AlreadyExistsException;
 import ec.com.sofka.customException.NotFoundException;
 import ec.com.sofka.data.request.AccountRequestDTO;
-import ec.com.sofka.data.request.CustomerRequestDTO;
+import ec.com.sofka.data.request.CreateCustomerDTO;
 import ec.com.sofka.data.response.AccountResponseDTO;
 import ec.com.sofka.mapper.DTORequestMapper;
 import ec.com.sofka.mapper.DTOResponseMapper;
@@ -71,9 +71,9 @@ public class AccountHandler {
                 });
     }
 
-    public Flux<AccountResponseDTO> getAccountsByCustomerId(CustomerRequestDTO customerRequestDTO) {
+    public Flux<AccountResponseDTO> getAccountsByCustomerId(CreateCustomerDTO createCustomerDTO) {
         return getAccountsByCustomerId
-                .apply(customerRequestDTO.getId())
+                .apply(createCustomerDTO.getId())
                 .flatMap(account -> DTOResponseMapper
                         .toAccountResponseDTO
                         .apply(Mono.just(account)))

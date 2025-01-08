@@ -10,6 +10,7 @@ public class CreateCustomerRequest extends Request {
     protected String address;
     protected String status;
 
+    // Constructores existentes
     public CreateCustomerRequest(String address, String email, String firstName, String lastName, String phone, String status) {
         super(null);
         this.address = address;
@@ -24,6 +25,7 @@ public class CreateCustomerRequest extends Request {
         super(aggregateId);
     }
 
+    // Métodos getter y setter
     public String getAddress() {
         return address;
     }
@@ -70,5 +72,49 @@ public class CreateCustomerRequest extends Request {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    // Implementación del patrón Builder
+    public static class Builder {
+        private String firstName;
+        private String lastName;
+        private String email;
+        private String phone;
+        private String address;
+        private String status;
+
+        public Builder withFirstName(String firstName) {
+            this.firstName = firstName;
+            return this;
+        }
+
+        public Builder withLastName(String lastName) {
+            this.lastName = lastName;
+            return this;
+        }
+
+        public Builder withEmail(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder withPhone(String phone) {
+            this.phone = phone;
+            return this;
+        }
+
+        public Builder withAddress(String address) {
+            this.address = address;
+            return this;
+        }
+
+        public Builder withStatus(String status) {
+            this.status = status;
+            return this;
+        }
+
+        public CreateCustomerRequest build() {
+            return new CreateCustomerRequest(address, email, firstName, lastName, phone, status);
+        }
     }
 }

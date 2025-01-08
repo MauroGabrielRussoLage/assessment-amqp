@@ -1,6 +1,5 @@
 package ec.com.sofka.data.request;
 
-import ec.com.sofka.generic.util.Request;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,12 +11,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CustomerRequestDTO {
-    private int id;
+public class CreateCustomerDTO {
     private String firstName;
     private String lastName;
     private String email;
     private String phone;
     private String address;
-    private List<AccountRequestDTO> accounts;
+    private String status;
 }

@@ -18,9 +18,9 @@ public class DTORequestMapper {
                 return accountDTO;
             });
 
-    public static final Function<Mono<Customer>, Mono<CustomerRequestDTO>> toCustomerRequestDTO = customer ->
+    public static final Function<Mono<Customer>, Mono<CreateCustomerDTO>> toCustomerRequestDTO = customer ->
             customer.map(customerEntity -> {
-                CustomerRequestDTO customerDTO = new CustomerRequestDTO();
+                CreateCustomerDTO customerDTO = new CreateCustomerDTO();
                 BeanUtils.copyProperties(customerEntity, customerDTO);
                 return customerDTO;
             });
@@ -39,7 +39,7 @@ public class DTORequestMapper {
                 return account;
             });
 
-    public static final Function<Mono<CustomerRequestDTO>, Mono<Customer>> toCustomer = customerDTO ->
+    public static final Function<Mono<CreateCustomerDTO>, Mono<Customer>> toCustomer = customerDTO ->
             customerDTO.map(DTO -> {
                 Customer customer = new Customer();
                 BeanUtils.copyProperties(DTO, customer);
