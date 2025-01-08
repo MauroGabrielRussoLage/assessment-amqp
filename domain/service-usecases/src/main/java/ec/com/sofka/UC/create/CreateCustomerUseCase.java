@@ -22,7 +22,7 @@ public class CreateCustomerUseCase {
     }
 
     public Mono<CreateCustomerResponse> apply(Mono<CreateCustomerRequest> customerRequest) {
-        //MAPEAR DTO A REQUEST
+
         return customerRequest.flatMap(customerRequestDTO -> {
             Customer customer = new Customer(
                      Address.of(customerRequestDTO.getAddress()),

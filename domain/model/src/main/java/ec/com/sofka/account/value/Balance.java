@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 public class Balance implements ValueObject<BigDecimal> {
     private final BigDecimal value;
 
-    private Balance(final BigDecimal value) {
+    public Balance(final BigDecimal value) {
         this.value = validate(value);
     }
 
