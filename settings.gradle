@@ -33,3 +33,6 @@ findProject(':log-usecases').projectDir = file('./domain/log-usecases')
 include 'rabbit-properties'
 findProject(':rabbit-properties').projectDir = file('./shared/rabbit-properties')
 
+include ':serializer'
+findProject(':serializer').projectDir = file('./infrastructure/helpers/serializer')
+

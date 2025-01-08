@@ -21,7 +21,7 @@ import java.util.List;
 @Document(collection = "Customer")
 public class CustomerDocument {
     @Id
-    private int id;
+    private String id;
     @NotNull(message = "Customer's first name is required")
     @NotBlank(message = "Customer's first name cannot be blank")
     @Size(min = 2, max = 50, message = "First name must be between 2 and 50 characters")
@@ -39,7 +39,5 @@ public class CustomerDocument {
     private String phone;
     @Size(max = 200, message = "Address can be a maximum of 200 characters")
     private String address;
-    @DBRef
-    @NotNull(message = "Customer's accounts is required")
-    private List<AccountDocument> accounts;
+    private String status;
 }

@@ -48,12 +48,7 @@ public class CustomerHandler {
     }
 
     public Mono<CustomerResponseDTO> createCustomer(CustomerRequestDTO customerRequestDTO) {
-        return DTOResponseMapper
-                .toCustomerResponseDTO
-                .apply(createCustomerUseCase
-                        .apply(DTORequestMapper
-                                .toCustomer
-                                .apply(Mono.just(customerRequestDTO))))
+        return Mono.just(customerRequestDTO)
                 .onErrorResume(e -> {
                     if (e instanceof AlreadyExistsException) {
                         return Mono.error(new ResponseStatusException(HttpStatus.CONFLICT, "Customer already exists"));

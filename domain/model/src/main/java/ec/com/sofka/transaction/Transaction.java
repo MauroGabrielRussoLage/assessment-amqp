@@ -1,22 +1,12 @@
 package ec.com.sofka.transaction;
 
-import ec.com.sofka.account.Account;
 import ec.com.sofka.account.value.AccountId;
-import ec.com.sofka.branch.Branch;
-import ec.com.sofka.branch.value.BranchId;
-import ec.com.sofka.card.Card;
-import ec.com.sofka.card.value.CardId;
 import ec.com.sofka.generic.object.Status;
 import ec.com.sofka.generic.util.Entity;
 import ec.com.sofka.transaction.value.TransactionId;
 import ec.com.sofka.transaction.value.object.*;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
 public class Transaction extends Entity<TransactionId> {
-    private BranchId branchId;
-    private CardId cardId;
     private Date date;
     private Type type;
     private Amount amount;
@@ -25,11 +15,9 @@ public class Transaction extends Entity<TransactionId> {
     private AccountId sourceAccountId;
     private Status status;
 
-    public Transaction(TransactionId id, Amount amount, BranchId branchId, CardId cardId, Date date, Description description, AccountId destinationAccountId, AccountId sourceAccountId, Status status, Type type) {
+    public Transaction(TransactionId id, Amount amount, Date date, Description description, AccountId destinationAccountId, AccountId sourceAccountId, Status status, Type type) {
         super(id);
         this.amount = amount;
-        this.branchId = branchId;
-        this.cardId = cardId;
         this.date = date;
         this.description = description;
         this.destinationAccountId = destinationAccountId;
@@ -42,28 +30,16 @@ public class Transaction extends Entity<TransactionId> {
         super(id);
     }
 
+    public Transaction() {
+        super(null);
+    }
+
     public Amount getAmount() {
         return amount;
     }
 
     public void setAmount(Amount amount) {
         this.amount = amount;
-    }
-
-    public BranchId getBranchId() {
-        return branchId;
-    }
-
-    public void setBranchId(BranchId branchId) {
-        this.branchId = branchId;
-    }
-
-    public CardId getCardId() {
-        return cardId;
-    }
-
-    public void setCardId(CardId cardId) {
-        this.cardId = cardId;
     }
 
     public Date getDate() {

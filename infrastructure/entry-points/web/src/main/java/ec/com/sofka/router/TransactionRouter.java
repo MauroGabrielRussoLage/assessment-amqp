@@ -1,7 +1,6 @@
 package ec.com.sofka.router;
 
 import ec.com.sofka.data.request.AccountRequestDTO;
-import ec.com.sofka.data.request.BranchRequestDTO;
 import ec.com.sofka.data.request.TransactionRequestDTO;
 import ec.com.sofka.data.response.TransactionResponseDTO;
 import ec.com.sofka.handler.TransactionHandler;
@@ -110,34 +109,6 @@ public class TransactionRouter {
                                                     mediaType = "application/json",
                                                     schema = @Schema(implementation = TransactionResponseDTO[].class)
                                             ))
-                            }
-                    )
-            ),
-            @RouterOperation(
-                    path = "/transactions/branch",
-                    method = RequestMethod.POST,
-                    operation = @Operation(
-                            tags = {"transactions"},
-                            operationId = "getTransactionsByBranch",
-                            summary = "Retrieve transactions by branch ID",
-                            description = "Get a list of transactions for a specific branch",
-                            requestBody = @RequestBody(
-                                    description = "Branch details",
-                                    required = true,
-                                    content = @Content(
-                                            mediaType = "application/json",
-                                            schema = @Schema(implementation = BranchRequestDTO.class)
-                                    )
-                            ),
-                            responses = {
-                                    @ApiResponse(
-                                            responseCode = "200",
-                                            description = "Transactions retrieved successfully",
-                                            content = @Content(
-                                                    mediaType = "application/json",
-                                                    schema = @Schema(implementation = TransactionResponseDTO[].class)
-                                            )),
-                                    @ApiResponse(responseCode = "404", description = "Branch not found")
                             }
                     )
             ),
@@ -302,7 +273,6 @@ public class TransactionRouter {
         return route(POST("/transactions/create"), this::createTransaction)
                 .andRoute(POST("/transactions/id"), this::getTransactionById)
                 .andRoute(GET("/transactions"), this::getAllTransactions)
-                .andRoute(POST("/transactions/branch"), this::getTransactionsByBranch)
                 .andRoute(POST("/transactions/account/destination"), this::getTransactionsByDestinationAccountId)
                 .andRoute(POST("/transactions/account/source"), this::getTransactionsBySourceAccountId)
                 .andRoute(POST("/transactions/date"), this::getTransactionsByDate)
@@ -330,14 +300,6 @@ public class TransactionRouter {
         return transactionHandler.getAllTransactions()
                 .collectList()
                 .flatMap(transactionResponseDTOs -> ServerResponse.status(transactionResponseDTOs.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK)
-                        .contentType(MediaType.APPLICATION_JSON).bodyValue(transactionResponseDTOs));
-    }
-
-    private Mono<ServerResponse> getTransactionsByBranch(ServerRequest request) {
-        return request.bodyToMono(BranchRequestDTO.class)
-                .flatMapMany(transactionHandler::getTransactionsByBranch)
-                .collectList()
-                .flatMap(transactionResponseDTOs -> ServerResponse.status(transactionResponseDTOs.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.FOUND)
                         .contentType(MediaType.APPLICATION_JSON).bodyValue(transactionResponseDTOs));
     }
 

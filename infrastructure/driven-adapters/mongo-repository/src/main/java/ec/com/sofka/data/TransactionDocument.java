@@ -23,9 +23,6 @@ import java.time.LocalDateTime;
 public class TransactionDocument {
     @Id
     private int id;
-    @DBRef
-    @NotNull(message = "Branch is required")
-    private BranchDocument branch;
     @NotNull(message = "Transaction date is required")
     private LocalDateTime date;
     @NotNull(message = "Transaction's type is required")

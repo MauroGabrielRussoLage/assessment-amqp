@@ -88,6 +88,11 @@ public class TransactionAdapter implements TransactionRepository {
     }
 
     @Override
+    public Mono<Transaction> updateTransaction(Mono<Transaction> transaction) {
+        return null;
+    }
+
+    @Override
     public Mono<Void> deleteById(Mono<Integer> id) {
         return id.flatMap(transactionId -> reactiveMongoTemplate
                         .remove(Query.query(Criteria.where("_id").is(transactionId)), TransactionDocument.class))

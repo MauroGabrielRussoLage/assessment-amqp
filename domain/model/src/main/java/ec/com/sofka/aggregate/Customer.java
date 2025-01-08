@@ -14,28 +14,20 @@ public class Customer extends AggregateRoot<CustomerId> {
     protected Address address;
     protected Status status;
 
-    public Customer() {
-        super(new CustomerId());
-        //Add the handler to the aggregate
-        setSubscription(new CustomerHandler(this));
-    }
-
-    //To rebuild the aggregate
     private Customer(final String id) {
         super(CustomerId.of(id));
-        //Add the handler to the aggregate
         setSubscription(new CustomerHandler(this));
     }
 
-
-    public Customer(CustomerId id, Address address, Email email, FirstName firstName, LastName lastName, Phone phone, Status status) {
+    public Customer( Address address, Email email, FirstName firstName, LastName lastName, Phone phone, Status status) {
         super(new CustomerId());
         setSubscription(new CustomerHandler(this));
-        addEvent(new CustomerCreated(address.getValue(), id.getValue(), email.getValue(), firstName.getValue(), lastName.getValue(), phone.getValue(), status.getValue()));
+        addEvent(new CustomerCreated(address.getValue(), email.getValue(), firstName.getValue(), lastName.getValue(), phone.getValue(), status.getValue()));
     }
 
-    protected Customer(CustomerId id) {
-        super(id);
+    public Customer() {
+        super(new CustomerId());
+        setSubscription(new CustomerHandler(this));
     }
 
     public Address getAddress() {

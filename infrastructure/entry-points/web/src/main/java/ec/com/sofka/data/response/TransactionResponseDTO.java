@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 @Builder
 public class TransactionResponseDTO {
     private int id;
-    private BranchResponseDTO branch;
     private LocalDateTime date;
     private String type;
     private BigDecimal amount;

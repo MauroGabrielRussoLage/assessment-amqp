@@ -1,30 +1,30 @@
 package ec.com.sofka.request;
 
 import ec.com.sofka.generic.util.Request;
-import ec.com.sofka.response.CardResponseDTO;
-import ec.com.sofka.response.TransactionResponseDTO;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 public class AccountRequestDTO extends Request {
-    private int id;
+    private String id;
     private String accountNumber;
     private String accountType;
     private BigDecimal balance;
-    private List<CardResponseDTO> cards;
-    private List<TransactionResponseDTO> transactions;
+    private String status;
+    private String customerId;
 
-    public AccountRequestDTO(String accountNumber, String accountType, BigDecimal balance, List<CardResponseDTO> cards, int id, List<TransactionResponseDTO> transactions) {
+    public AccountRequestDTO(String aggregateId, String accountNumber, String accountType, BigDecimal balance, String customerId, String id, String status) {
+        super(aggregateId);
         this.accountNumber = accountNumber;
         this.accountType = accountType;
         this.balance = balance;
-        this.cards = cards;
+        this.customerId = customerId;
         this.id = id;
-        this.transactions = transactions;
+        this.status = status;
     }
 
-    public AccountRequestDTO() {}
+    public AccountRequestDTO(String aggregateId) {
+        super(aggregateId);
+    }
 
     public String getAccountNumber() {
         return accountNumber;
@@ -50,27 +50,27 @@ public class AccountRequestDTO extends Request {
         this.balance = balance;
     }
 
-    public List<CardResponseDTO> getCards() {
-        return cards;
+    public String getCustomerId() {
+        return customerId;
     }
 
-    public void setCards(List<CardResponseDTO> cards) {
-        this.cards = cards;
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public List<TransactionResponseDTO> getTransactions() {
-        return transactions;
+    public String getStatus() {
+        return status;
     }
 
-    public void setTransactions(List<TransactionResponseDTO> transactions) {
-        this.transactions = transactions;
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

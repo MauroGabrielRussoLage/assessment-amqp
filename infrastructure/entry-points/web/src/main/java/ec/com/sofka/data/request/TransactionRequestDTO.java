@@ -1,7 +1,5 @@
 package ec.com.sofka.data.request;
 
-import ec.com.sofka.request.AccountRequestDTO;
-import ec.com.sofka.request.BranchRequestDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +14,6 @@ import java.time.LocalDateTime;
 @Builder
 public class TransactionRequestDTO {
     private int id;
-    private BranchRequestDTO branch;
     private LocalDateTime date;
     private String type;
     private BigDecimal amount;

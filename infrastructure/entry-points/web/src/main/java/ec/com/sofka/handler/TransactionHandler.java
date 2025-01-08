@@ -7,7 +7,6 @@ import ec.com.sofka.UC.update.UpdateTransactionUseCase;
 import ec.com.sofka.customException.AlreadyExistsException;
 import ec.com.sofka.customException.NotFoundException;
 import ec.com.sofka.data.request.AccountRequestDTO;
-import ec.com.sofka.data.request.BranchRequestDTO;
 import ec.com.sofka.data.request.TransactionRequestDTO;
 import ec.com.sofka.data.response.TransactionResponseDTO;
 import ec.com.sofka.mapper.DTORequestMapper;
@@ -88,20 +87,6 @@ public class TransactionHandler {
                 .flatMap(transaction -> DTOResponseMapper.toTransactionResponseDTO.apply(Mono.just(transaction)))
                 .onErrorResume(e -> {
                     return Mono.error(new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error fetching all transactions"));
-                });
-    }
-
-    public Flux<TransactionResponseDTO> getTransactionsByBranch(BranchRequestDTO branchRequestDTO) {
-        return getTransactionByBranchUseCase
-                .apply(branchRequestDTO.getId())
-                .flatMap(transaction -> DTOResponseMapper
-                        .toTransactionResponseDTO
-                        .apply(Mono.just(transaction)))
-                .onErrorResume(e -> {
-                    if (e instanceof NotFoundException) {
-                        return Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "Transactions not found for the branch"));
-                    }
-                    return Mono.error(new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error"));
                 });
     }
 

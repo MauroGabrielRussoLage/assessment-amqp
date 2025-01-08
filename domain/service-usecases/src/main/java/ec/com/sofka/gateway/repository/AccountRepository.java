@@ -1,20 +1,20 @@
 package ec.com.sofka.gateway.repository;
 
-import ec.com.sofka.request.AccountRequestDTO;
-import ec.com.sofka.response.AccountResponseDTO;
+import ec.com.sofka.DTO.response.AccountDTO;
+import ec.com.sofka.account.Account;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface AccountRepository {
-    Mono<AccountResponseDTO> createAccount(Mono<AccountRequestDTO> account);
+    Mono<Account> createAccount(Mono<Account> account);
 
-    Mono<AccountResponseDTO> findAccountById(Mono<Integer> id);
+    Mono<Account> findAccountById(Mono<Integer> id);
 
-    Flux<AccountResponseDTO> getAccountsByCustomerId(Mono<Integer> customer_id);
+    Flux<Account> getAccountsByCustomerId(Mono<Integer> customer_id);
 
-    Flux<AccountResponseDTO> findAll();
+    Flux<Account> findAll();
 
-    Mono<AccountResponseDTO> updateAccount(Mono<AccountRequestDTO> account);
+    Mono<Account> updateAccount(Mono<Account> account);
 
     Mono<Void> deleteById(Mono<Integer> id);
 }

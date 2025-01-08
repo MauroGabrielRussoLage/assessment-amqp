@@ -21,10 +21,10 @@ public class CreateTransactionUseCase {
     }
 
     public Mono<Transaction> apply(Mono<Transaction> transaction) {
-        return transaction
+        /*return transaction
                 .flatMap(tx -> {
                     TransactionLog transactionLog = new TransactionLog(
-                            tx.getSourceAccount().getId(),
+                            tx.getSourceAccountId(),
                             "CREATE",
                             "INFO",
                             "Transaction ok",
@@ -38,6 +38,7 @@ public class CreateTransactionUseCase {
                                     busMessage.sendMsg(Mono.just(transactionLog))
                                             .then(Mono.just(createdTx))
                             );
-                });
+                });*/
+        return null;
     }
 }

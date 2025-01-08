@@ -1,7 +1,7 @@
 package ec.com.sofka.gateway.repository;
 
-import ec.com.sofka.request.TransactionRequestDTO;
-import ec.com.sofka.response.TransactionResponseDTO;
+import ec.com.sofka.DTO.response.TransactionDTO;
+import ec.com.sofka.transaction.Transaction;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -9,23 +9,23 @@ import java.time.LocalDateTime;
 
 public interface TransactionRepository {
 
-    Mono<TransactionResponseDTO> createTransaction(Mono<TransactionRequestDTO> transaction);
+    Mono<Transaction> createTransaction(Mono<Transaction> transaction);
 
-    Mono<TransactionResponseDTO> findTransactionById(Mono<Integer> id);
+    Mono<Transaction> findTransactionById(Mono<Integer> id);
 
-    Flux<TransactionResponseDTO> findAll();
+    Flux<Transaction> findAll();
 
-    Flux<TransactionResponseDTO> findTransactionsByDestinationAccountId(Mono<Integer> id);
+    Flux<Transaction> findTransactionsByDestinationAccountId(Mono<Integer> id);
 
-    Flux<TransactionResponseDTO> findTransactionsBySourceAccountId(Mono<Integer> id);
+    Flux<Transaction> findTransactionsBySourceAccountId(Mono<Integer> id);
 
-    Flux<TransactionResponseDTO> findTransactionsByBranchId(Mono<Integer> id);
+    Flux<Transaction> findTransactionsByBranchId(Mono<Integer> id);
 
-    Flux<TransactionResponseDTO> findTransactionsByDate(Mono<LocalDateTime> date);
+    Flux<Transaction> findTransactionsByDate(Mono<LocalDateTime> date);
 
-    Flux<TransactionResponseDTO> findTransactionsByType(Mono<String> type);
+    Flux<Transaction> findTransactionsByType(Mono<String> type);
 
-    Mono<TransactionResponseDTO> updateTransaction(Mono<TransactionRequestDTO> transaction);
+    Mono<Transaction> updateTransaction(Mono<Transaction> transaction);
 
     Mono<Void> deleteById(Mono<Integer> id);
 }

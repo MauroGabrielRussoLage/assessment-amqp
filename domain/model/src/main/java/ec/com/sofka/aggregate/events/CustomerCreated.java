@@ -3,7 +3,6 @@ package ec.com.sofka.aggregate.events;
 import ec.com.sofka.generic.domain.DomainEvent;
 
 public class CustomerCreated extends DomainEvent {
-    private String customerId;
     private String firstName;
     private String lastName;
     private String email;
@@ -11,10 +10,9 @@ public class CustomerCreated extends DomainEvent {
     private String address;
     private String status;
 
-    public CustomerCreated(String address, String customerId, String email, String firstName, String lastName, String phone, String status) {
+    public CustomerCreated(String address, String email, String firstName, String lastName, String phone, String status) {
         super(EventsEnum.CUSTOMER_CREATED.name());
         this.address = address;
-        this.customerId = customerId;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -28,10 +26,6 @@ public class CustomerCreated extends DomainEvent {
 
     public String getAddress() {
         return address;
-    }
-
-    public String getCustomerId() {
-        return customerId;
     }
 
     public String getEmail() {

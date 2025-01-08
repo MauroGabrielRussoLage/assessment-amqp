@@ -33,9 +33,6 @@ public class AccountDocument {
     @DecimalMin(value = "0", message = "Balance must not be negative")
     private BigDecimal balance;
     @DBRef
-    @NotNull(message = "Card is required")
-    private List<CardDocument> cards;
-    @DBRef
     @NotNull(message = "Transaction is required")
     private List<TransactionDocument> transactions;
 }

@@ -1,25 +1,24 @@
 package ec.com.sofka.gateway.repository;
 
-import ec.com.sofka.request.CustomerRequestDTO;
-import ec.com.sofka.response.CustomerResponseDTO;
+import ec.com.sofka.response.CustomerDTO;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface CustomerRepository {
 
-    Mono<CustomerResponseDTO> createCustomer(Mono<CustomerRequestDTO> customer);
+    Mono<CustomerDTO> createCustomer(Mono<CustomerDTO> customer);
 
-    Mono<CustomerResponseDTO> findCustomerById(Mono<Integer> id);
+    Mono<CustomerDTO> findCustomerById(Mono<Integer> id);
 
-    Mono<CustomerResponseDTO> findCustomerByFirstName(Mono<String> first_name);
+    Mono<CustomerDTO> findCustomerByFirstName(Mono<String> first_name);
 
-    Mono<CustomerResponseDTO> findCustomerByLastName(Mono<String> last_name);
+    Mono<CustomerDTO> findCustomerByLastName(Mono<String> last_name);
 
-    Mono<CustomerResponseDTO> findCustomerByEmail(Mono<String> email);
+    Mono<CustomerDTO> findCustomerByEmail(Mono<String> email);
 
-    Flux<CustomerResponseDTO> findAll();
+    Flux<CustomerDTO> findAll();
 
-    Mono<CustomerResponseDTO> updateCustomer(Mono<CustomerRequestDTO> customer);
+    Mono<CustomerDTO> updateCustomer(Mono<CustomerDTO> customer);
 
     Mono<Void> deleteById(Mono<Integer> id);
 }

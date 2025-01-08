@@ -1,34 +1,29 @@
 package ec.com.sofka.request;
 
-import java.util.List;
+import ec.com.sofka.generic.util.Request;
 
-public class CustomerRequestDTO {
-    private int id;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String phone;
-    private String address;
-    private List<AccountRequestDTO> accounts;
+public class CustomerRequestDTO extends Request {
+    protected String id;
+    protected String firstName;
+    protected String lastName;
+    protected String email;
+    protected String phone;
+    protected String address;
+    protected String status;
 
-    public CustomerRequestDTO(List<AccountRequestDTO> accounts, String address, String email, String firstName, int id, String lastName, String phone) {
-        this.accounts = accounts;
+    public CustomerRequestDTO(String aggregateId, String address, String email, String firstName, String id, String lastName, String phone, String status) {
+        super(aggregateId);
         this.address = address;
         this.email = email;
         this.firstName = firstName;
         this.id = id;
         this.lastName = lastName;
         this.phone = phone;
+        this.status = status;
     }
 
-    public CustomerRequestDTO() {}
-
-    public List<AccountRequestDTO> getAccounts() {
-        return accounts;
-    }
-
-    public void setAccounts(List<AccountRequestDTO> accounts) {
-        this.accounts = accounts;
+    public CustomerRequestDTO(String aggregateId) {
+        super(aggregateId);
     }
 
     public String getAddress() {
@@ -55,11 +50,11 @@ public class CustomerRequestDTO {
         this.firstName = firstName;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -77,5 +72,13 @@ public class CustomerRequestDTO {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

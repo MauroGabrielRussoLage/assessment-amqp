@@ -26,6 +26,10 @@ public class Account extends Entity<AccountId> {
         this.customerId = customerId;
     }
 
+    public Account() {
+        super(null);
+    }
+
     public AccountNumber getAccountNumber() {
         return accountNumber;
     }

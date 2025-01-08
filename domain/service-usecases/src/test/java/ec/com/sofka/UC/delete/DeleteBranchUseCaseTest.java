@@ -1,7 +1,6 @@
 package ec.com.sofka.UC.delete;
 
 import ec.com.sofka.branch.Branch;
-import ec.com.sofka.gateway.repository.BranchRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
