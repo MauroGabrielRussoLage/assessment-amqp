@@ -9,7 +9,7 @@ public interface AccountRepository {
 
     Mono<Account> findAccountById(Mono<Integer> id);
 
-    Flux<Account> getAccountsByCustomerId(Mono<Integer> customer_id);
+    Flux<Account> getAccountsByCustomerId(Mono<String> customer_id);
 
     Flux<Account> findAll();
 

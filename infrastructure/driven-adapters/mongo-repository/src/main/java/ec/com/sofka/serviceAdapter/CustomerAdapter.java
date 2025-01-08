@@ -145,7 +145,7 @@ public class CustomerAdapter implements CustomerRepository {
     }
 
     @Override
-    public Mono<Void> deleteById(Mono<Integer> id) {
+    public Mono<Void> deleteById(Mono<String> id) {
         return id.flatMap(customerId -> reactiveMongoTemplate
                         .remove(Query.query(Criteria.where("_id").is(customerId)), CustomerDocument.class))
                 .then();

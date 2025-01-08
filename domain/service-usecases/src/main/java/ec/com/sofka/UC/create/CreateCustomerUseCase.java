@@ -25,12 +25,12 @@ public class CreateCustomerUseCase {
         //MAPEAR DTO A REQUEST
         return customerRequest.flatMap(customerRequestDTO -> {
             Customer customer = new Customer(
-                    new Address(customerRequestDTO.getAddress()),
-                    new Email(customerRequestDTO.getEmail()),
-                    new FirstName(customerRequestDTO.getFirstName()),
-                    new LastName(customerRequestDTO.getLastName()),
-                    new Phone(customerRequestDTO.getPhone()),
-                    new Status(customerRequestDTO.getStatus())
+                     Address.of(customerRequestDTO.getAddress()),
+                     Email.of(customerRequestDTO.getEmail()),
+                     FirstName.of(customerRequestDTO.getFirstName()),
+                     LastName.of(customerRequestDTO.getLastName()),
+                     Phone.of(customerRequestDTO.getPhone()),
+                     Status.of(customerRequestDTO.getStatus())
             );
             customer.getUncommittedEvents().forEach(domainEvent -> {
                 repository.save(Mono.just(domainEvent));

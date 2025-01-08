@@ -20,5 +20,5 @@ public interface CustomerRepository {
 
     Mono<CustomerDTO> updateCustomer(Mono<CustomerDTO> customer);
 
-    Mono<Void> deleteById(Mono<Integer> id);
+    Mono<Void> deleteById(Mono<String> id);
 }

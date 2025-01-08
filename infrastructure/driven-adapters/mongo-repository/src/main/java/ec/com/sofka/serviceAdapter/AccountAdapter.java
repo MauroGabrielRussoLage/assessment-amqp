@@ -42,7 +42,7 @@ public class AccountAdapter implements AccountRepository {
     }
 
     @Override
-    public Flux<Account> getAccountsByCustomerId(Mono<Integer> customer_id) {
+    public Flux<Account> getAccountsByCustomerId(Mono<String> customer_id) {
         return customer_id.flatMapMany(customerId -> {
             Query query = new Query(Criteria.where("_id").is(customerId));
             return reactiveMongoTemplate.findOne(query, AccountDocument.class)

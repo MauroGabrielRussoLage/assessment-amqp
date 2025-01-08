@@ -13,7 +13,7 @@ public class GetCustomerByIdUseCase {
         this.repository = repository;
     }
 
-    public Mono<Customer> apply(int id) {
+    public Mono<Customer> apply(String id) {
         return null;
     }
 }

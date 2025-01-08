@@ -12,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class CreateCustomerDTO {
+    private String id;
     private String firstName;
     private String lastName;
     private String email;

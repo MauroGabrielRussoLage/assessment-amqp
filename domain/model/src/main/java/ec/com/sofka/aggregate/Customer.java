@@ -22,7 +22,7 @@ public class Customer extends AggregateRoot<CustomerId> {
     public Customer( Address address, Email email, FirstName firstName, LastName lastName, Phone phone, Status status) {
         super(new CustomerId());
         setSubscription(new CustomerHandler(this));
-        addEvent(new CustomerCreated(address.getValue(), email.getValue(), firstName.getValue(), lastName.getValue(), phone.getValue(), status.getValue()));
+        addEvent(new CustomerCreated(address.getValue(), email.getValue(), firstName.getValue(), lastName.getValue(), phone.getValue(), status.getValue())).apply();
     }
 
     public Customer() {

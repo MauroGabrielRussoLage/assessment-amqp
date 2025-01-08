@@ -14,7 +14,7 @@ public class GetAccountsByCustomerIdUseCase {
         this.repository = repository;
     }
 
-    public Flux<Account> apply(Integer customerId) {
+    public Flux<Account> apply(String customerId) {
         return repository.getAccountsByCustomerId(Mono.just(customerId));
     }
 }
