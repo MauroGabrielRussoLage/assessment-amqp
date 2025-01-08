@@ -1,5 +1,6 @@
 package ec.com.sofka.aggregate;
 
+import ec.com.sofka.account.Account;
 import ec.com.sofka.account.value.AccountNumber;
 import ec.com.sofka.account.value.AccountType;
 import ec.com.sofka.account.value.Balance;
@@ -20,6 +21,7 @@ public class Customer extends AggregateRoot<CustomerId> {
     protected Phone phone;
     protected Address address;
     protected Status status;
+    protected List<Account> accounts;
 
     public Customer(final String id) {
         super(CustomerId.of(id));

@@ -15,15 +15,13 @@ public class Account extends Entity<AccountId> {
     private AccountType accountType;
     private Balance balance;
     private Status status;
-    private CustomerId customerId;
 
-    public Account(AccountId id, AccountNumber accountNumber, AccountType accountType, Balance balance, Status status, CustomerId customerId) {
-        super(id);
+    public Account(AccountNumber accountNumber, AccountType accountType, Balance balance, Status status) {
+        super(new AccountId());
         this.accountNumber = accountNumber;
         this.accountType = accountType;
         this.balance = balance;
         this.status = status;
-        this.customerId = customerId;
     }
 
     public Account() {
