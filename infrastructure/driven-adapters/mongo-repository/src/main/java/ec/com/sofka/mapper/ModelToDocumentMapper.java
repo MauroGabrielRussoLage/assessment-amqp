@@ -19,8 +19,15 @@ public class ModelToDocumentMapper {
 
     public static final Function<Mono<Customer>, Mono<CustomerDocument>> toCustomer = customer ->
             customer.map(customerModel -> {
-                CustomerDocument customerDocument = new CustomerDocument();
-                BeanUtils.copyProperties(customerModel, customerDocument);
+                CustomerDocument customerDocument = new CustomerDocument(
+                        customerModel.getId().getValue(),
+                        customerModel.getFirstName().getValue(),
+                        customerModel.getLastName().getValue(),
+                        customerModel.getEmail().getValue(),
+                        customerModel.getPhone().getValue(),
+                        customerModel.getAddress().getValue(),
+                        customerModel.getStatus().getValue()
+                );
                 return customerDocument;
             });
 
